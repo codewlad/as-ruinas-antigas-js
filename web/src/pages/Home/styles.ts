@@ -10,12 +10,17 @@ export const Container = styled.div`
     justify-content: center;
     flex-direction: column;
     gap: 2.4rem;
+
+    ::-webkit-scrollbar {
+        width: 0rem;
+        height: 0rem;
+    }
 `
 
 export const Content = styled.div`
     position: relative;
-    max-width: 768px; // 48*16
-    height: 528px;    // 48*11
+    max-width: 770px; // 48*16+2
+    height: 530px;    // 48*11+2
     width: 100%;
 
     border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
@@ -28,4 +33,5 @@ export const Content = styled.div`
     justify-content: center;
 
     flex-direction: column;
+    overflow: auto;
 `

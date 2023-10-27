@@ -53,7 +53,6 @@ export const Message = ({
 	startAnimation();
 
 	useEffect(() => {
-		console.log('opa');
 		setIsLoading(false);
 	}, []);
 
@@ -77,7 +76,7 @@ export const Message = ({
 			const timeoutId = setTimeout(() => {
 				setDisplayedMessage(message.slice(0, characterIndex + 1));
 				setCharacterIndex(characterIndex + 1);
-			}, 20);
+			}, 0);
 
 			return () => {
 				clearTimeout(timeoutId);
