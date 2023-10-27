@@ -33,6 +33,11 @@ export default createGlobalStyle`
         opacity: 1;
     }
 
+    .show-200 {
+        opacity: 1;
+        transition: all 200ms;
+    }
+
     button {
         position: relative;
         font-size: 1.8rem;
