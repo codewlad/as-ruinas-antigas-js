@@ -5,6 +5,7 @@ import tileWall from '@assets/wall-0.png';
 import tileFloor from '@assets/floor-0.png';
 
 export const Conteiner = styled.div`
+    position: relative;
     //border: 1px solid blue;
     display: flex;
     flex-direction: column;

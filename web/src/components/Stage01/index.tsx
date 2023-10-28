@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { Char } from '@components/Char';
+
 import { Conteiner, Row, TileD, TileW, TileF } from './styles';
 
 export const Stage01 = () => {
@@ -8,7 +10,6 @@ export const Stage01 = () => {
 	useEffect(() => {
 		const wallElements = document.getElementsByClassName('tw');
 		setWalls(wallElements);
-		console.log(wallElements[27]);
 		console.log('Posição x:', wallElements[27].offsetLeft);
 		console.log('Posição y:', wallElements[27].offsetTop);
 	}, []);
@@ -234,6 +235,8 @@ export const Stage01 = () => {
 				<TileW className='tw' />
 				<TileW className='tw' />
 			</Row>
+
+			<Char />
 		</Conteiner>
 	);
 };
