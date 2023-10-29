@@ -39,3 +39,15 @@ export const TileF = styled.div`
     background: black url(${tileFloor}) no-repeat center;
     background-size: cover;
 `
+
+export const Torch = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    background: rgb(0,0,0);
+    background: radial-gradient(circle at 30% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%);
+    //transition: all 10ms;
+`

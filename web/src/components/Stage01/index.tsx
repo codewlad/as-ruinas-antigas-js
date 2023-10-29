@@ -1,67 +1,72 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import { GetBloquedTiles } from '../../utils/bloquedTiles';
 
 import { Char } from '@components/Char';
 
-import { Conteiner, Row, TileD, TileW, TileF } from './styles';
+import { Conteiner, Row, TileD, TileW, TileF, Torch } from './styles';
 
 export const Stage01 = () => {
-	const [walls, setWalls] = useState([]);
+	const [posX, setPosX] = useState(48 + 24);
+	const [posY, setPosY] = useState(288 + 24);
+
+	const updatePosition = (newPosX: number, newPosY: number) => {
+		setPosX(newPosX + 24);
+		setPosY(newPosY + 24);
+	};
 
 	useEffect(() => {
-		const wallElements = document.getElementsByClassName('tw');
-		setWalls(wallElements);
-		console.log('Posição x:', wallElements[27].offsetLeft);
-		console.log('Posição y:', wallElements[27].offsetTop);
+		GetBloquedTiles();
 	}, []);
 
 	return (
 		<Conteiner>
 			{/* line 1*/}
 			<Row>
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 2*/}
 			<Row>
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 3*/}
 			<Row>
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
@@ -70,16 +75,16 @@ export const Stage01 = () => {
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 4*/}
 			<Row>
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
@@ -92,13 +97,13 @@ export const Stage01 = () => {
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 5*/}
 			<Row>
-				<TileD />
+				<TileD className='td' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
@@ -113,12 +118,12 @@ export const Stage01 = () => {
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
-				<TileD />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 6*/}
 			<Row>
-				<TileD />
+				<TileD className='td' />
 				<TileW className='tw' />
 				<TileF />
 				<TileF />
@@ -133,12 +138,12 @@ export const Stage01 = () => {
 				<TileF />
 				<TileF />
 				<TileW className='tw' />
-				<TileD />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 7*/}
 			<Row>
-				<TileD />
+				<TileD className='td' />
 				<TileF />
 				<TileF />
 				<TileF />
@@ -153,13 +158,13 @@ export const Stage01 = () => {
 				<TileF />
 				<TileF />
 				<TileF />
-				<TileD />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 8*/}
 			<Row>
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileF />
 				<TileF />
 				<TileF />
@@ -172,16 +177,16 @@ export const Stage01 = () => {
 				<TileF />
 				<TileF />
 				<TileF />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 9*/}
 			<Row>
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileF />
 				<TileF />
 				<TileF />
@@ -190,28 +195,28 @@ export const Stage01 = () => {
 				<TileF />
 				<TileF />
 				<TileF />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 			</Row>
 
 			{/* line 10*/}
 			<Row>
 				<TileW className='tw' />
 				<TileW className='tw' />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileF />
 				<TileF />
 				<TileF />
 				<TileF />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 			</Row>
@@ -222,21 +227,26 @@ export const Stage01 = () => {
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
-				<TileD />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
+				<TileD className='td' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 				<TileW className='tw' />
 			</Row>
 
-			<Char />
+			<Char updatePosition={updatePosition} />
+			<Torch
+				style={{
+					background: `radial-gradient(circle at ${posX}px ${posY}px, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 200px)`,
+				}}
+			/>
 		</Conteiner>
 	);
 };

@@ -1,8 +1,15 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
+
+import { CharacterPosition } from '../../utils/characterPosition';
+import { BloquedTiles } from '../../utils/bloquedTiles';
 
 import { Character } from './styles';
 
-export const Char = () => {
+type CharProps = {
+	updatePosition: (x: number, y: number) => void;
+};
+
+export const Char: React.FC<CharProps> = ({ updatePosition }) => {
 	const characterRef = useRef<HTMLDivElement | null>(null);
 
 	const animationFramesDown = [2, 1, 0, 1];
@@ -41,6 +48,11 @@ export const Char = () => {
 					parseInt(characterRef.current.style.top) || 0;
 				characterRef.current.style.left = currentLeft + moveX + 'px';
 				characterRef.current.style.top = currentTop + moveY + 'px';
+
+				updatePosition(
+					parseInt(characterRef.current.style.left),
+					parseInt(characterRef.current.style.top)
+				);
 			}
 
 			frameIndexRef.current++;
@@ -49,22 +61,54 @@ export const Char = () => {
 				if (animationIntervalRef.current !== null) {
 					clearInterval(animationIntervalRef.current);
 					animationIntervalRef.current = null;
+
+					if (characterRef.current) {
+						CharacterPosition.posX = parseInt(
+							characterRef.current.style.left
+						);
+						CharacterPosition.posY = parseInt(
+							characterRef.current.style.top
+						);
+					}
 				}
 			}
 		}, interval);
 	};
 
 	document.addEventListener('keydown', function (event) {
+		const isBlocked = (x: number, y: number) =>
+			BloquedTiles.find(
+				(item) =>
+					item.posX === CharacterPosition.posX + x &&
+					item.posY === CharacterPosition.posY + y
+			);
 		if (event.key === 'ArrowRight') {
-			moveCharacter(animationFramesRight, 12, 0);
+			isBlocked(48, 0)
+				? moveCharacter(animationFramesRight, 0, 0)
+				: moveCharacter(animationFramesRight, 12, 0);
 		} else if (event.key === 'ArrowLeft') {
-			moveCharacter(animationFramesLeft, -12, 0);
+			isBlocked(-48, 0)
+				? moveCharacter(animationFramesLeft, 0, 0)
+				: moveCharacter(animationFramesLeft, -12, 0);
 		} else if (event.key === 'ArrowUp') {
-			moveCharacter(animationFramesUp, 0, -12);
+			isBlocked(0, -48)
+				? moveCharacter(animationFramesUp, 0, 0)
+				: moveCharacter(animationFramesUp, 0, -12);
 		} else if (event.key === 'ArrowDown') {
-			moveCharacter(animationFramesDown, 0, 12);
+			isBlocked(0, 48)
+				? moveCharacter(animationFramesDown, 0, 0)
+				: moveCharacter(animationFramesDown, 0, 12);
 		}
 	});
+
+	useEffect(() => {
+		if (characterRef.current) {
+			characterRef.current.style.left = '48px';
+			characterRef.current.style.top = '288px';
+		}
+		CharacterPosition.posX = 48;
+		CharacterPosition.posY = 288;
+	}, []);
 
 	return <Character ref={characterRef} />;
 };
