@@ -11,6 +11,18 @@ export const Container = styled.div`
     .movie-bar {
         height: 10rem;
         transition: all 1s;
+
+        animation: top-down 1s;
+
+        @keyframes top-down {
+            0% {
+                height: 0;
+            }
+
+            100% {
+                height: 10rem;
+            }
+        }
     }
 
     .bc-opacity-black-80 {
@@ -76,18 +88,6 @@ export const MovieBarTop = styled.div`
     background-color: black;
     transition: all 1s;
     height: 0;
-
-    animation: top-down 1s forwards;
-
-    @keyframes top-down {
-        0% {
-            height: 0;
-        }
-
-        100% {
-            height: 10rem;
-        }
-    }
 `
 
 export const MovieBarBottom = styled.div`
