@@ -5,11 +5,11 @@ import { BloquedTiles } from '../../utils/bloquedTiles';
 
 import { Character } from './styles';
 
-type CharProps = {
-	updatePosition: (x: number, y: number) => void;
-};
-
-export const Char: React.FC<CharProps> = ({ updatePosition }) => {
+export const Char = ({
+	updateTorchPosition,
+	updateCharPosition,
+	getKeyDown,
+}) => {
 	const characterRef = useRef<HTMLDivElement | null>(null);
 
 	const animationFramesDown = [2, 1, 0, 1];
@@ -49,7 +49,7 @@ export const Char: React.FC<CharProps> = ({ updatePosition }) => {
 				characterRef.current.style.left = currentLeft + moveX + 'px';
 				characterRef.current.style.top = currentTop + moveY + 'px';
 
-				updatePosition(
+				updateTorchPosition(
 					parseInt(characterRef.current.style.left),
 					parseInt(characterRef.current.style.top)
 				);
@@ -69,6 +69,11 @@ export const Char: React.FC<CharProps> = ({ updatePosition }) => {
 						CharacterPosition.posY = parseInt(
 							characterRef.current.style.top
 						);
+
+						updateCharPosition(
+							parseInt(characterRef.current.style.left),
+							parseInt(characterRef.current.style.top)
+						);
 					}
 				}
 			}
@@ -76,6 +81,7 @@ export const Char: React.FC<CharProps> = ({ updatePosition }) => {
 	};
 
 	document.addEventListener('keydown', function (event) {
+		getKeyDown(event.key);
 		const isBlocked = (x: number, y: number) =>
 			BloquedTiles.find(
 				(item) =>
