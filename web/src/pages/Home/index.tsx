@@ -77,7 +77,7 @@ export function Home() {
 			}
 		});
 
-		document.addEventListener('touchmove', function (event) {
+		content.current!.addEventListener('touchmove', function (event) {
 			event.preventDefault();
 		});
 	}, []);

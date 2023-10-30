@@ -10,6 +10,7 @@ export const Container = styled.div`
 
     .movie-bar {
         height: 10rem;
+        transition: all 1s;
     }
 
     .bc-opacity-black-80 {
