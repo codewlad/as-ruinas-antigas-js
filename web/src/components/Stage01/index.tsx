@@ -7,48 +7,21 @@ import { Char } from '@components/Char';
 import { Conteiner, Row, TileD, TileW, TileF, Torch } from './styles';
 
 export const Stage01 = ({
-	setStageWidth,
-	setStageHeight,
-	setCharPosX,
-	setCharPosY,
-	setKeydown,
+	content,
+}: {
+	content: React.RefObject<HTMLDivElement>;
 }) => {
 	const [posX, setPosX] = useState(48 + 24);
 	const [posY, setPosY] = useState(288 + 24);
 
-	/*
-	const [charPosX, setCharPosX] = useState(48);
-	const [charPosY, setCharPosY] = useState(288);
-	*/
-
 	const conteinerRef = useRef<HTMLDivElement | null>(null);
-
-	const getWidthAndHeight = () => {
-		if (conteinerRef.current) {
-			const widthConteiner = conteinerRef.current.offsetWidth;
-			const heightConteiner = conteinerRef.current.offsetHeight;
-
-			setStageWidth(widthConteiner);
-			setStageHeight(heightConteiner);
-		}
-	};
 
 	const updateTorchPosition = (newPosX: number, newPosY: number) => {
 		setPosX(newPosX + 24);
 		setPosY(newPosY + 24);
 	};
 
-	const updateCharPosition = (newPosX: number, newPosY: number) => {
-		setCharPosX(newPosX);
-		setCharPosY(newPosY);
-	};
-
-	const getKeyDown = (keydown) => {
-		setKeydown(keydown);
-	};
-
 	useEffect(() => {
-		getWidthAndHeight();
 		GetBloquedTiles();
 	}, []);
 
@@ -276,10 +249,8 @@ export const Stage01 = ({
 
 			<Char
 				updateTorchPosition={updateTorchPosition}
-				updateCharPosition={updateCharPosition}
-				getKeyDown={getKeyDown}
+				content={content}
 			/>
-			{/**/}
 			<Torch
 				style={{
 					background: `radial-gradient(circle at ${posX}px ${posY}px, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 200px)`,

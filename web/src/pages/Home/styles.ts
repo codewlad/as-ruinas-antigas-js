@@ -34,4 +34,6 @@ export const Content = styled.div`
 
     flex-direction: column;
     overflow: auto;
+
+    scroll-behavior: smooth;
 `

@@ -5,11 +5,23 @@ import { BloquedTiles } from '../../utils/bloquedTiles';
 
 import { Character } from './styles';
 
+type UpdateTorchPosition = (left: number, top: number) => void;
+
 export const Char = ({
 	updateTorchPosition,
-	updateCharPosition,
-	getKeyDown,
+	content,
+}: {
+	updateTorchPosition: UpdateTorchPosition;
+	content: React.RefObject<HTMLDivElement>;
 }) => {
+	let keydown = '';
+
+	let stageWidth = content.current!.offsetWidth;
+	let stageHeight = content.current!.offsetHeight;
+
+	let halfStageWidth = Math.floor(stageWidth / 2 / 48) * 48;
+	let halfStageHeight = Math.floor(stageHeight / 2 / 48) * 48;
+
 	const characterRef = useRef<HTMLDivElement | null>(null);
 
 	const animationFramesDown = [2, 1, 0, 1];
@@ -42,10 +54,8 @@ export const Char = ({
 			updateSprite(animationFrames[frameIndexRef.current]);
 
 			if (characterRef.current) {
-				const currentLeft =
-					parseInt(characterRef.current.style.left) || 0;
-				const currentTop =
-					parseInt(characterRef.current.style.top) || 0;
+				const currentLeft = parseInt(characterRef.current.style.left);
+				const currentTop = parseInt(characterRef.current.style.top);
 				characterRef.current.style.left = currentLeft + moveX + 'px';
 				characterRef.current.style.top = currentTop + moveY + 'px';
 
@@ -53,6 +63,26 @@ export const Char = ({
 					parseInt(characterRef.current.style.left),
 					parseInt(characterRef.current.style.top)
 				);
+
+				if (keydown === 'ArrowRight') {
+					CharacterPosition.posX + 48 > halfStageWidth
+						? (content.current!.scrollLeft += 12)
+						: null;
+				} else if (keydown === 'ArrowLeft') {
+					CharacterPosition.posX - 48 - content.current!.scrollLeft <
+					halfStageWidth
+						? (content.current!.scrollLeft -= 12)
+						: null;
+				} else if (keydown === 'ArrowUp') {
+					CharacterPosition.posY > halfStageHeight
+						? (content.current!.scrollTop += 12)
+						: null;
+				} else if (keydown === 'ArrowDown') {
+					CharacterPosition.posY - content.current!.scrollTop <
+					halfStageHeight
+						? (content.current!.scrollTop -= 12)
+						: null;
+				}
 			}
 
 			frameIndexRef.current++;
@@ -69,11 +99,6 @@ export const Char = ({
 						CharacterPosition.posY = parseInt(
 							characterRef.current.style.top
 						);
-
-						updateCharPosition(
-							parseInt(characterRef.current.style.left),
-							parseInt(characterRef.current.style.top)
-						);
 					}
 				}
 			}
@@ -81,7 +106,7 @@ export const Char = ({
 	};
 
 	document.addEventListener('keydown', function (event) {
-		getKeyDown(event.key);
+		keydown = event.key;
 		const isBlocked = (x: number, y: number) =>
 			BloquedTiles.find(
 				(item) =>
@@ -107,13 +132,24 @@ export const Char = ({
 		}
 	});
 
+	const handleResize = () => {
+		halfStageWidth = Math.floor(content.current!.offsetWidth / 2 / 48) * 48;
+		halfStageHeight =
+			Math.floor(content.current!.offsetHeight / 2 / 48) * 48;
+	};
+
 	useEffect(() => {
-		if (characterRef.current) {
-			characterRef.current.style.left = '48px';
-			characterRef.current.style.top = '288px';
-		}
 		CharacterPosition.posX = 48;
 		CharacterPosition.posY = 288;
+
+		if (characterRef.current) {
+			characterRef.current.style.left = `${CharacterPosition.posX}px`;
+			characterRef.current.style.top = `${CharacterPosition.posY}px`;
+		}
+
+		window.addEventListener('resize', handleResize);
+
+		handleResize();
 	}, []);
 
 	return <Character ref={characterRef} />;

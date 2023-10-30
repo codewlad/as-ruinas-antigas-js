@@ -12,15 +12,17 @@ export const Conteiner = styled.div`
 `
 
 export const Row = styled.div`
-    //border: 1px solid white;
+    //border: 0px solid white;
+    border: none;
     display: flex;
+    background: gray;
 `
 
 export const TileD = styled.div`
     //border: 1px solid red;
     min-width: 48px;
     min-height: 48px;
-    background: black url(${tileDivision}) no-repeat center;
+    background: gray url(${tileDivision}) center;
     background-size: cover;
 `
 
@@ -28,15 +30,16 @@ export const TileW = styled.div`
     //border: 1px solid yellow;
     min-width: 48px;
     min-height: 48px;
-    background: black url(${tileWall}) no-repeat center;
+    background: gray url(${tileWall}) center;
     background-size: cover;
 `
 
 export const TileF = styled.div`
-    //border: 1px solid yellow;
+    //border: 0px solid yellow;
+    border: none;
     min-width: 48px;
     min-height: 48px;
-    background: black url(${tileFloor}) no-repeat center;
+    background: gray url(${tileFloor}) center;
     background-size: cover;
 `
 
@@ -47,7 +50,4 @@ export const Torch = styled.div`
     width: 100%;
     height: 100%;
     z-index: 11;
-    background: rgb(0,0,0);
-    background: radial-gradient(circle at 30% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%);
-    //transition: all 10ms;
 `

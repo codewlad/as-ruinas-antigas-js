@@ -17,20 +17,6 @@ export function Home() {
 	const buttonStartGame = useRef<HTMLButtonElement>(null);
 	const content = useRef<HTMLDivElement>(null);
 
-	const [contentWidth, setContentWidth] = useState(0);
-	const [contentHeight, setContentHeight] = useState(0);
-
-	const [halfContentWidth, setHalfContentWidth] = useState(0);
-	const [halfContentHeight, setHalfContentHeight] = useState(0);
-
-	const [stageWidth, setStageWidth] = useState(0);
-	const [stageHeight, setStageHeight] = useState(0);
-
-	const [charPosX, setCharPosX] = useState(0);
-	const [charPosY, setCharPosY] = useState(0);
-
-	const [keydown, setKeydown] = useState('');
-
 	const closeMessage = (
 		setStateFunction: React.Dispatch<React.SetStateAction<boolean>>,
 		step: string
@@ -40,37 +26,17 @@ export function Home() {
 	};
 
 	const handleResize = () => {
-		if (content.current) {
-			setContentWidth(content.current.offsetWidth);
-			setContentHeight(content.current.offsetHeight);
-			setHalfContentWidth(
-				Math.floor(content.current.offsetWidth / 2 / 48) * 48
-			);
-			setHalfContentHeight(
-				Math.floor(content.current.offsetHeight / 2 / 48) * 48
-			);
+		const scrollLeft =
+			Math.ceil(
+				(CharacterPosition.posX - content.current!.offsetWidth / 2) / 48
+			) * 48;
 
-			const scrollLeft =
-				Math.ceil(
-					(CharacterPosition.posX - content.current.offsetWidth / 2) /
-						48
-				) * 48;
-
-			if (scrollLeft > 0) {
-				content.current.scrollLeft = scrollLeft;
-			} else {
-				content.current.scrollLeft = 0;
-			}
+		if (scrollLeft > 0) {
+			content.current!.scrollLeft = scrollLeft;
+		} else {
+			content.current!.scrollLeft = 0;
 		}
 	};
-
-	/*
-	useEffect(() => {
-		if (startedGame) {
-			setIntro(true);
-		}
-	}, [startedGame]);
-	*/
 
 	useEffect(() => {
 		switch (step) {
@@ -107,30 +73,14 @@ export function Home() {
 			];
 
 			if (teclasBloqueadas.includes(event.key)) {
-				event.preventDefault(); // Isso impede a ação padrão da tecla
+				event.preventDefault();
 			}
 		});
-	}, []);
 
-	useEffect(() => {
-		if (keydown === 'ArrowRight') {
-			if (charPosX > halfContentWidth) {
-				content.current.scrollLeft += 48;
-			}
-		} else if (keydown === 'ArrowLeft') {
-			if (charPosX - content.current.scrollLeft < halfContentWidth) {
-				content.current.scrollLeft -= 48;
-			}
-		} else if (keydown === 'ArrowUp') {
-			if (charPosY > halfContentHeight) {
-				content.current.scrollTop += 48;
-			}
-		} else if (keydown === 'ArrowDown') {
-			if (charPosY - content.current.scrollTop < halfContentWidth) {
-				content.current.scrollTop -= 48;
-			}
-		}
-	}, [stageWidth, stageHeight, charPosX, charPosY]);
+		document.addEventListener('touchmove', function (event) {
+			event.preventDefault();
+		});
+	}, []);
 
 	return (
 		<Container>
@@ -159,15 +109,7 @@ export function Home() {
 					/>
 				)}
 
-				{stage01 && (
-					<Stage01
-						setStageWidth={setStageWidth}
-						setStageHeight={setStageHeight}
-						setCharPosX={setCharPosX}
-						setCharPosY={setCharPosY}
-						setKeydown={setKeydown}
-					/>
-				)}
+				{stage01 && <Stage01 content={content} />}
 			</Content>
 		</Container>
 	);
