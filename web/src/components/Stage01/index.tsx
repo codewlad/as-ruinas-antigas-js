@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { GetBloquedTiles } from '../../utils/bloquedTiles';
 
 import { Char } from '@components/Char';
+import { Gamepad } from '@components/Gamepad';
 
 import { Conteiner, Row, TileD, TileW, TileF, Torch } from './styles';
 
@@ -246,6 +247,8 @@ export const Stage01 = ({
 				<TileW className='tw' />
 				<TileW className='tw' />
 			</Row>
+
+			<Gamepad />
 
 			<Char
 				updateTorchPosition={updateTorchPosition}
