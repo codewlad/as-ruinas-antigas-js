@@ -1,10 +1,13 @@
 type MovementInformationProps = {
-	content: HTMLDivElement | null;
+    char: HTMLDivElement | null;
+    halfStageWidth: number;
+    halfStageHeight: number;
+	stageContent: HTMLDivElement | null;
 }
 
-export let MovementInformation = {
+export let MovementInformation: MovementInformationProps = {
     char: null,
-    halfStageWidth: null,
-    halfStageHeight: null,
+    halfStageWidth: 0,
+    halfStageHeight: 0,
     stageContent: null,
 }

@@ -25,8 +25,8 @@ export const Char = ({
 	let stageWidth = content.current!.offsetWidth;
 	let stageHeight = content.current!.offsetHeight;
 
-	let halfStageWidth = Math.floor(stageWidth / 2 / 48) * 48;
-	let halfStageHeight = Math.floor(stageHeight / 2 / 48) * 48;
+	//let halfStageWidth = Math.floor(stageWidth / 2 / 48) * 48;
+	//let halfStageHeight = Math.floor(stageHeight / 2 / 48) * 48;
 
 	const characterRef = useRef<HTMLDivElement | null>(null);
 
@@ -149,8 +149,9 @@ export const Char = ({
 	});
 
 	const handleResize = () => {
-		halfStageWidth = Math.floor(content.current!.offsetWidth / 2 / 48) * 48;
-		halfStageHeight =
+		MovementInformation.halfStageWidth =
+			Math.floor(content.current!.offsetWidth / 2 / 48) * 48;
+		MovementInformation.halfStageHeight =
 			Math.floor(content.current!.offsetHeight / 2 / 48) * 48;
 	};
 

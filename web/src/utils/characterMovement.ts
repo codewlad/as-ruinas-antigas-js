@@ -13,17 +13,17 @@ let frameIndex = 0;
 
 let animationInterval = 0;
 
-const updateSprite = (frame: number, char) => {
+const updateSprite = (frame: number, char: HTMLDivElement | null) => {
     const frameX = (frame % 3) * 48;
         const frameY = Math.floor(frame / 3) * 48;
-        char.style.backgroundPosition = `-${frameX}px -${frameY}px`;
+        char!.style.backgroundPosition = `-${frameX}px -${frameY}px`;
 }
 
 const moveCharacter = (
     animationFrames: number[],
     moveX: number,
     moveY: number,
-    char: any,
+    char: HTMLDivElement | null,
     halfStageWidth: number,
     halfStageHeight: number,
     content: any,
@@ -40,14 +40,14 @@ const moveCharacter = (
         updateSprite(animationFrames[frameIndex], char);
 
         
-        const currentLeft = parseInt(char.style.left);
-        const currentTop = parseInt(char.style.top);
-        char.style.left = currentLeft + moveX + 'px';
-        char.style.top = currentTop + moveY + 'px';
+        const currentLeft = parseInt(char!.style.left);
+        const currentTop = parseInt(char!.style.top);
+        char!.style.left = currentLeft + moveX + 'px';
+        char!.style.top = currentTop + moveY + 'px';
 
         updateTorchPosition(
-            parseInt(char.style.left),
-            parseInt(char.style.top)
+            parseInt(char!.style.left),
+            parseInt(char!.style.top)
         );
 
         if (keydown === 'ArrowRight') {
@@ -77,14 +77,14 @@ const moveCharacter = (
                 clearInterval(animationInterval);
                 animationInterval = 0;
 
-                CharacterPosition.posX = parseInt(char.style.left);
-                CharacterPosition.posY = parseInt(char.style.top);                
+                CharacterPosition.posX = parseInt(char!.style.left);
+                CharacterPosition.posY = parseInt(char!.style.top);                
             }
         }
     }, interval);
 };
 
-export const handleMovement = (key, updateTorchPosition) => {
+export const handleMovement = (key: string, updateTorchPosition: (newPosX: number, newPosY: number) => void) => {
     const {char, halfStageWidth, halfStageHeight, stageContent} = MovementInformation
     keydown = key;
 		const isBlocked = (x: number, y: number) =>
