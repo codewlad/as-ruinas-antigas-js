@@ -248,8 +248,6 @@ export const Stage01 = ({
 				<TileW className='tw' />
 			</Row>
 
-			<Gamepad />
-
 			<Char
 				updateTorchPosition={updateTorchPosition}
 				content={content}
@@ -259,6 +257,8 @@ export const Stage01 = ({
 					background: `radial-gradient(circle at ${posX}px ${posY}px, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 200px)`,
 				}}
 			/>
+
+			<Gamepad updateTorchPosition={updateTorchPosition} />
 		</Conteiner>
 	);
 };

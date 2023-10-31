@@ -1,7 +1,11 @@
 import { useRef, useEffect } from 'react';
 
 import { CharacterPosition } from '../../utils/characterPosition';
+import { handleMovement } from '../../utils/characterMovement';
+import { MovementInformation } from '../../utils/characterInfo';
+/*
 import { BloquedTiles } from '../../utils/bloquedTiles';
+*/
 
 import { Character } from './styles';
 
@@ -14,7 +18,9 @@ export const Char = ({
 	updateTorchPosition: UpdateTorchPosition;
 	content: React.RefObject<HTMLDivElement>;
 }) => {
+	/*
 	let keydown = '';
+	*/
 
 	let stageWidth = content.current!.offsetWidth;
 	let stageHeight = content.current!.offsetHeight;
@@ -24,10 +30,16 @@ export const Char = ({
 
 	const characterRef = useRef<HTMLDivElement | null>(null);
 
+	MovementInformation.halfStageWidth = Math.floor(stageWidth / 2 / 48) * 48;
+	MovementInformation.halfStageHeight = Math.floor(stageHeight / 2 / 48) * 48;
+	MovementInformation.stageContent = content.current;
+
+	/*
 	const animationFramesDown = [2, 1, 0, 1];
 	const animationFramesLeft = [5, 4, 3, 4];
 	const animationFramesRight = [8, 7, 6, 7];
 	const animationFramesUp = [11, 10, 9, 10];
+	
 	const frameIndexRef = useRef(0);
 	const animationIntervalRef = useRef<number | null>(null);
 
@@ -104,8 +116,11 @@ export const Char = ({
 			}
 		}, interval);
 	};
+	*/
 
 	document.addEventListener('keydown', function (event) {
+		handleMovement(event.key, updateTorchPosition);
+		/*
 		keydown = event.key;
 		const isBlocked = (x: number, y: number) =>
 			BloquedTiles.find(
@@ -130,6 +145,7 @@ export const Char = ({
 				? moveCharacter(animationFramesDown, 0, 0)
 				: moveCharacter(animationFramesDown, 0, 12);
 		}
+		*/
 	});
 
 	const handleResize = () => {
@@ -150,7 +166,14 @@ export const Char = ({
 		window.addEventListener('resize', handleResize);
 
 		handleResize();
+
+		MovementInformation.char = document.querySelector('#char');
 	}, []);
 
-	return <Character ref={characterRef} />;
+	return (
+		<Character
+			ref={characterRef}
+			id='char'
+		/>
+	);
 };
