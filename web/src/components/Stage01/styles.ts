@@ -6,20 +6,17 @@ import tileFloor from '@assets/floor-0.png';
 
 export const Conteiner = styled.div`
     position: relative;
-    //border: 1px solid blue;
     display: flex;
     flex-direction: column;
 `
 
 export const Row = styled.div`
-    //border: 0px solid white;
     border: none;
     display: flex;
     background: gray;
 `
 
 export const TileD = styled.div`
-    //border: 1px solid red;
     min-width: 48px;
     min-height: 48px;
     background: gray url(${tileDivision}) center;
@@ -27,7 +24,6 @@ export const TileD = styled.div`
 `
 
 export const TileW = styled.div`
-    //border: 1px solid yellow;
     min-width: 48px;
     min-height: 48px;
     background: gray url(${tileWall}) center;
@@ -35,7 +31,6 @@ export const TileW = styled.div`
 `
 
 export const TileF = styled.div`
-    //border: 0px solid yellow;
     border: none;
     min-width: 48px;
     min-height: 48px;

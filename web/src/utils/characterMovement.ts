@@ -95,19 +95,19 @@ export const handleMovement = (key: string, updateTorchPosition: (newPosX: numbe
 			);
 		if (key === 'ArrowRight') {
 			isBlocked(48, 0)
-				? moveCharacter(animationFramesRight, 0, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition)
+				? updateSprite(7, char)
 				: moveCharacter(animationFramesRight, 12, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
 		} else if (key === 'ArrowLeft') {
 			isBlocked(-48, 0)
-				? moveCharacter(animationFramesLeft, 0, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition)
+				? updateSprite(4, char)
 				: moveCharacter(animationFramesLeft, -12, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
 		} else if (key === 'ArrowUp') {
 			isBlocked(0, -48)
-				? moveCharacter(animationFramesUp, 0, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition)
+				? updateSprite(10, char)
 				: moveCharacter(animationFramesUp, 0, -12, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
 		} else if (key === 'ArrowDown') {
 			isBlocked(0, 48)
-				? moveCharacter(animationFramesDown, 0, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition)
+				? updateSprite(1, char)
 				: moveCharacter(animationFramesDown, 0, 12, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
 		}
 }
