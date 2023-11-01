@@ -76,7 +76,7 @@ export const Message = ({
 			const timeoutId = setTimeout(() => {
 				setDisplayedMessage(message.slice(0, characterIndex + 1));
 				setCharacterIndex(characterIndex + 1);
-			}, 0);
+			}, 20);
 
 			return () => {
 				clearTimeout(timeoutId);
