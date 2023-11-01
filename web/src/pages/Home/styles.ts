@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import bg from '@assets/bg.webp';
-
 export const Container = styled.div`
     width: 100%;
 
@@ -11,6 +9,39 @@ export const Container = styled.div`
     flex-direction: column;
     gap: 2.4rem;
 
+    #buttonStartGame {
+        position: relative;
+        padding: 0;
+        border: 0;
+
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+
+        &:hover span {
+            animation: pulse 1s ease-in-out infinite 1s;
+
+            @keyframes pulse {
+                0%, 100% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        span {
+            position: absolute;
+            top: 260px;
+            left: 147px;
+            font-size: 3rem;
+
+            transform: scale(1);
+            transition: transform 1s ease-in-out;
+        }
+    }
+
     ::-webkit-scrollbar {
         width: 0rem;
         height: 0rem;
@@ -19,14 +50,9 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     position: relative;
-    max-width: 770px; // 48*16+2
-    height: 530px;    // 48*11+2
+    max-width: 768px; // 48*16
+    height: 528px;    // 48*11
     width: 100%;
-
-    border: 1px solid ${({ theme }) => theme.COLORS.WHITE};
-
-    background: black url(${bg}) no-repeat center;
-    background-size: cover;
 
     display: flex;
     align-items: center;

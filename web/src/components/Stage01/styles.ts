@@ -8,6 +8,18 @@ export const Conteiner = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
+    filter: brightness(0);
+    animation: fade-in 1s forwards;
+
+    @keyframes fade-in {
+        0% {
+            filter: brightness(0);
+        }
+
+        100% {
+            filter: brightness(100%);
+        }
+    }
 `
 
 export const Row = styled.div`
@@ -40,9 +52,13 @@ export const TileF = styled.div`
 
 export const Torch = styled.div`
     position: absolute;
-    top: 0;
+    top: 0px;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 11;
+
+    @media (max-width: 360px) {
+        height: calc(100% + 2px)
+    }
 `

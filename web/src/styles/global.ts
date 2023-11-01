@@ -9,6 +9,8 @@ export default createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
     }
 
     body {
@@ -60,6 +62,21 @@ export default createGlobalStyle`
 
         &:active {
             background-color: rgba(0,0,0,1);
+        }
+    }
+
+    .fade-out {
+        filter: brightness(100%);
+        animation: fade-out 1s forwards;
+    }
+
+    @keyframes fade-out {
+        0% {
+            filter: brightness(100%);
+        }
+
+        100% {
+            filter: brightness(0);
         }
     }
 

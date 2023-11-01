@@ -6,6 +6,7 @@ import { Message } from '@components/Message';
 
 import { Container, Content } from './styles';
 import { Stage01 } from '@components/Stage01';
+import { Totem } from '@components/Totem';
 
 export function Home() {
 	const [step, setStep] = useState<string>('initial');
@@ -14,7 +15,7 @@ export function Home() {
 	const [intro, setIntro] = useState<boolean>(false);
 	const [stage01, setStage01] = useState<boolean>(false);
 
-	const buttonStartGame = useRef<HTMLButtonElement>(null);
+	//const buttonStartGame = useRef<HTMLButtonElement>(null);
 	const content = useRef<HTMLDivElement>(null);
 
 	const closeMessage = (
@@ -88,13 +89,15 @@ export function Home() {
 
 			<Content ref={content}>
 				{!startedGame && (
-					<button
-						id='buttonStartGame'
-						ref={buttonStartGame}
-						onClick={() => setStep('intro')}
-					>
-						Iniciar
-					</button>
+					<>
+						<button
+							id='buttonStartGame'
+							onClick={() => setStep('intro')}
+						>
+							<span>Iniciar</span>
+							<Totem />
+						</button>
+					</>
 				)}
 
 				{intro && (
