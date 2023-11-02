@@ -81,6 +81,14 @@ export function Home() {
 		content.current!.addEventListener('touchmove', function (event) {
 			event.preventDefault();
 		});
+
+		document.addEventListener('contextmenu', function (event) {
+			event.preventDefault();
+		});
+
+		document.addEventListener('touchstart', function (event) {
+			event.preventDefault();
+		});
 	}, []);
 
 	return (
