@@ -52,6 +52,13 @@ export const Gamepad = ({
 		}
 	};
 
+	// Evento para lidar com a saída do mouse da área do botão enquanto pressionado
+	const handleMouseLeave = () => {
+		if (pressedButton) {
+			stopMovement();
+		}
+	};
+
 	return (
 		<Conteiner>
 			<Sticky>
@@ -60,6 +67,7 @@ export const Gamepad = ({
 						<button
 							onMouseDown={() => startMovement('ArrowUp')}
 							onMouseUp={stopMovement}
+							onMouseLeave={handleMouseLeave} // Adicione esse evento
 							onTouchStart={() => startMovement('ArrowUp')}
 							onTouchEnd={stopMovement}
 							onKeyDown={preventSpacebarActivation}
@@ -74,6 +82,7 @@ export const Gamepad = ({
 						<button
 							onMouseDown={() => startMovement('ArrowLeft')}
 							onMouseUp={stopMovement}
+							onMouseLeave={handleMouseLeave}
 							onTouchStart={() => startMovement('ArrowLeft')}
 							onTouchEnd={stopMovement}
 							onKeyDown={preventSpacebarActivation}
@@ -84,10 +93,11 @@ export const Gamepad = ({
 							/>
 						</button>
 					</Left>
-					<Right>
+					<Right style={{ userSelect: 'none' }}>
 						<button
 							onMouseDown={() => startMovement('ArrowRight')}
 							onMouseUp={stopMovement}
+							onMouseLeave={handleMouseLeave}
 							onTouchStart={() => startMovement('ArrowRight')}
 							onTouchEnd={stopMovement}
 							onKeyDown={preventSpacebarActivation}
@@ -102,6 +112,7 @@ export const Gamepad = ({
 						<button
 							onMouseDown={() => startMovement('ArrowDown')}
 							onMouseUp={stopMovement}
+							onMouseLeave={handleMouseLeave}
 							onTouchStart={() => startMovement('ArrowDown')}
 							onTouchEnd={stopMovement}
 							onKeyDown={preventSpacebarActivation}
