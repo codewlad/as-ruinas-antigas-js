@@ -14,6 +14,14 @@ export const Gamepad = ({
 }: {
 	updateTorchPosition: UpdateTorchPosition;
 }) => {
+	const preventSpacebarActivation = (
+		e: React.KeyboardEvent<HTMLButtonElement>
+	) => {
+		if (e.key === ' ' || e.key === 'Spacebar') {
+			e.preventDefault();
+		}
+	};
+
 	return (
 		<Conteiner>
 			<Sticky>
@@ -23,6 +31,7 @@ export const Gamepad = ({
 							onClick={() =>
 								handleMovement('ArrowUp', updateTorchPosition)
 							}
+							onKeyDown={preventSpacebarActivation}
 						>
 							<img
 								src={imgUp}
@@ -35,6 +44,7 @@ export const Gamepad = ({
 							onClick={() =>
 								handleMovement('ArrowLeft', updateTorchPosition)
 							}
+							onKeyDown={preventSpacebarActivation}
 						>
 							<img
 								src={imgLeft}
@@ -50,6 +60,7 @@ export const Gamepad = ({
 									updateTorchPosition
 								)
 							}
+							onKeyDown={preventSpacebarActivation}
 						>
 							<img
 								src={imgRight}
@@ -62,6 +73,7 @@ export const Gamepad = ({
 							onClick={() =>
 								handleMovement('ArrowDown', updateTorchPosition)
 							}
+							onKeyDown={preventSpacebarActivation}
 						>
 							<img
 								src={imgDown}
