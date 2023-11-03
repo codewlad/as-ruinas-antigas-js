@@ -87,7 +87,7 @@ export function Home() {
 		});
 
 		document.addEventListener('contextmenu', function (event) {
-			//event.preventDefault();
+			event.preventDefault();
 		});
 
 		document.addEventListener('touchstart', function (event) {
