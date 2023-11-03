@@ -11,6 +11,8 @@ import {
 	Content,
 } from './styles';
 
+import { HandleMovementStatus } from '../../utils/characterMovement';
+
 export const Message = ({
 	messages,
 	onClose,
@@ -35,6 +37,7 @@ export const Message = ({
 	const content = useRef<HTMLInputElement | null>(null);
 
 	const startAnimation = () => {
+		HandleMovementStatus(false);
 		if (movieBarTop.current && movieBarBottom.current && content.current) {
 			movieBarTop.current.classList.add('movie-bar');
 			movieBarBottom.current.classList.add('movie-bar');
@@ -80,7 +83,7 @@ export const Message = ({
 			const timeoutId = setTimeout(() => {
 				setDisplayedMessage(message.slice(0, characterIndex + 1));
 				setCharacterIndex(characterIndex + 1);
-			}, 0);
+			}, 20);
 
 			return () => {
 				clearTimeout(timeoutId);

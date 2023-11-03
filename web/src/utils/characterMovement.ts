@@ -13,6 +13,12 @@ let frameIndex = 0;
 
 let animationInterval = 0;
 
+let movementStatus = true;
+
+export const HandleMovementStatus = (value: boolean) => {
+    movementStatus = value
+}
+
 const updateSprite = (frame: number, char: HTMLDivElement | null) => {
     const frameX = (frame % 3) * 48;
         const frameY = Math.floor(frame / 3) * 48;
@@ -85,6 +91,8 @@ const moveCharacter = (
 };
 
 export const handleMovement = (key: string, updateTorchPosition: (newPosX: number, newPosY: number) => void) => {
+    if(!movementStatus) return
+
     const {char, halfStageWidth, halfStageHeight, stageContent} = MovementInformation
     keydown = key;
 		const isBlocked = (x: number, y: number) =>

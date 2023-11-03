@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { GetBloquedTiles } from '../../utils/bloquedTiles';
+import { HandleMovementStatus } from '../../utils/characterMovement';
 
 import { Char } from '@components/Char';
 import { Gamepad } from '@components/Gamepad';
@@ -30,8 +31,6 @@ export const Stage01 = ({
 		setPosY(newPosY + 24);
 	};
 
-	console.log(mainScreenWidth);
-
 	const scene01 = () => {
 		conteinerRef.current!.style.animation =
 			'fade-in 1s forwards, moveRightLeft 0.5s ease-in-out 2';
@@ -51,6 +50,8 @@ export const Stage01 = ({
 	};
 
 	useEffect(() => {
+		HandleMovementStatus(false);
+
 		switch (step) {
 			case 'initial':
 				break;
@@ -58,6 +59,7 @@ export const Stage01 = ({
 				setDialog01(true);
 				break;
 			case 'bandage':
+				HandleMovementStatus(true);
 				console.log('bandage');
 				break;
 			default:
