@@ -9,7 +9,8 @@ export const Conteiner = styled.div`
     display: flex;
     flex-direction: column;
     filter: brightness(0);
-    animation: fade-in 1s forwards;
+
+    /* Animations */
 
     @keyframes fade-in {
         0% {
@@ -18,6 +19,18 @@ export const Conteiner = styled.div`
 
         100% {
             filter: brightness(100%);
+        }
+    }
+
+    @keyframes moveRightLeft {
+        0% {
+            transform: translateX(0);
+        }
+        50% {
+            transform: translateX(10px);
+        }
+        100% {
+            transform: translateX(0px);
         }
     }
 `

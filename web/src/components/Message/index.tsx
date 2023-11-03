@@ -3,7 +3,9 @@ import {
 	ButtonNext,
 	WrappedMessages,
 	MessageParagraph,
-	Container,
+	Conteiner,
+	Sticky,
+	MessageConteiner,
 	MovieBarTop,
 	MovieBarBottom,
 	Content,
@@ -12,9 +14,11 @@ import {
 export const Message = ({
 	messages,
 	onClose,
+	mainScreenWidth,
 }: {
 	messages: string[];
 	onClose: () => void;
+	mainScreenWidth: number | undefined;
 }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [textButton, setTextButton] = useState('avançar');
@@ -99,22 +103,30 @@ export const Message = ({
 	};
 
 	return (
-		<Container>
-			<MovieBarTop ref={movieBarTop} />
-			<Content ref={content}>
-				<WrappedMessages>
-					<MessageParagraph id='divMessage'>
-						{displayedMessage}
-					</MessageParagraph>
-					<ButtonNext
-						onClick={handleMessage}
-						disabled={!isButtonEnabled}
-					>
-						{textButton}
-					</ButtonNext>
-				</WrappedMessages>
-			</Content>
-			<MovieBarBottom ref={movieBarBottom} />
-		</Container>
+		<Conteiner>
+			<Sticky>
+				<MessageConteiner
+					style={{
+						width: `${mainScreenWidth}px`,
+					}}
+				>
+					<MovieBarTop ref={movieBarTop} />
+					<Content ref={content}>
+						<WrappedMessages>
+							<MessageParagraph id='divMessage'>
+								{displayedMessage}
+							</MessageParagraph>
+							<ButtonNext
+								onClick={handleMessage}
+								disabled={!isButtonEnabled}
+							>
+								{textButton}
+							</ButtonNext>
+						</WrappedMessages>
+					</Content>
+					<MovieBarBottom ref={movieBarBottom} />
+				</MessageConteiner>
+			</Sticky>
+		</Conteiner>
 	);
 };

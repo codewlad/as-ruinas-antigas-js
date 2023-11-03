@@ -1,10 +1,28 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-    z-index: 999;
+export const Conteiner = styled.div`
     position: absolute;
-    display: grid;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    z-Index: 12;
+    display: flex;
+`
+
+export const Sticky = styled.div`
+    position: sticky;
+    z-Index: 12;
+    top: 0;
+    left: 0;
+    width: 100%;
+`
+
+export const MessageConteiner = styled.div`
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: grid;
     height: 100%;
     grid-template-rows: min-content auto min-content;
 
@@ -26,7 +44,7 @@ export const Container = styled.div`
     }
 
     .bc-opacity-black-80 {
-        background-color: rgba(50,50,50,0.95);
+        background-color: rgba(50,50,50,0.8);
     }
 
     .show {
@@ -103,13 +121,13 @@ export const Content = styled.div`
     justify-content: center;
 
     padding: 4rem;
-    font-size: 2.4rem;
+    font-size: clamp(1rem, 1.25rem + 2vw, 2.4rem);
 
     opacity: 0;
     transition: all 1s;
 
     @media (max-width: 500px) {
         padding: 2rem;
-        font-size: 2rem;
+        //font-size: 2rem;
     }
 `

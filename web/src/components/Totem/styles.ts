@@ -40,7 +40,7 @@ export const Container = styled.div`
         color: red;
         background-color: rgba(255,0,0,0.3);
         box-shadow: 0 0 1rem 0.25rem red, 0 0 4rem 2rem red, inset 0 0 0.75rem 0.25rem rgba(255,0,0,0.7);
-    }
+    }    
 `
 
 export const Image = styled.img`

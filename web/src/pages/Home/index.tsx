@@ -11,11 +11,14 @@ import { Totem } from '@components/Totem';
 export function Home() {
 	const [step, setStep] = useState<string>('initial');
 
+	const [mainScreenWidth, setMainScreenWidth] = useState<number | undefined>(
+		0
+	);
+
 	const [startedGame, setStartedGame] = useState<boolean>(false);
 	const [intro, setIntro] = useState<boolean>(false);
 	const [stage01, setStage01] = useState<boolean>(false);
 
-	//const buttonStartGame = useRef<HTMLButtonElement>(null);
 	const content = useRef<HTMLDivElement>(null);
 
 	const closeMessage = (
@@ -27,6 +30,7 @@ export function Home() {
 	};
 
 	const handleResize = () => {
+		setMainScreenWidth(content.current!.offsetWidth);
 		const scrollLeft =
 			Math.ceil(
 				(CharacterPosition.posX - content.current!.offsetWidth / 2) / 48
@@ -83,7 +87,7 @@ export function Home() {
 		});
 
 		document.addEventListener('contextmenu', function (event) {
-			event.preventDefault();
+			//event.preventDefault();
 		});
 
 		document.addEventListener('touchstart', function (event) {
@@ -117,10 +121,16 @@ export function Home() {
 							'Um ruído baixo... logo depois um estrondo... o chão cede sob o seus pés... e ele cai!',
 						]}
 						onClose={() => closeMessage(setIntro, 'stage01')}
+						mainScreenWidth={mainScreenWidth}
 					/>
 				)}
 
-				{stage01 && <Stage01 content={content} />}
+				{stage01 && (
+					<Stage01
+						content={content}
+						mainScreenWidth={mainScreenWidth}
+					/>
+				)}
 			</Content>
 		</Container>
 	);
