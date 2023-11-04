@@ -91,6 +91,9 @@ export const MessageParagraph = styled.div`
 
 export const ButtonNext = styled.button`
     opacity: ${({ disabled }) => disabled ? 0 : 1};
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
 
     &:hover {
         background-color: rgba(0,0,0,0.5);
@@ -99,7 +102,6 @@ export const ButtonNext = styled.button`
     &:active {
         background-color: rgba(0,0,0,0.9);
     }
-
 `
 
 export const MovieBarTop = styled.div`
@@ -130,4 +132,18 @@ export const Content = styled.div`
         padding: 2rem;
         //font-size: 2rem;
     }
+`
+
+export const KeyboardLetter = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid white;
+    border-radius: 50%;
+
+    width: 2rem;
+    height: 2rem;
+
+    font-size: 1rem;
 `

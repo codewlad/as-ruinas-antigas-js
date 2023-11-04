@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
 	ButtonNext,
 	WrappedMessages,
@@ -9,6 +9,7 @@ import {
 	MovieBarTop,
 	MovieBarBottom,
 	Content,
+	KeyboardLetter,
 } from './styles';
 
 import { HandleMovementStatus } from '../../utils/characterMovement';
@@ -57,6 +58,32 @@ export const Message = ({
 		}, 1000);
 	};
 
+	const handleMessage = useCallback(() => {
+		if (messages.length - 1 === currentIndex) {
+			return finishAnimation();
+		}
+
+		if (currentIndex < messages.length - 1) {
+			setCurrentIndex(currentIndex + 1);
+			setDisplayedMessage('');
+			setCharacterIndex(0);
+		}
+	}, [currentIndex, messages, finishAnimation]);
+
+	const handleKeyPress = (event: KeyboardEvent) => {
+		if (event.key === 'a') {
+			handleMessage();
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyPress);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyPress);
+		};
+	}, [handleKeyPress]);
+
 	startAnimation();
 
 	useEffect(() => {
@@ -83,7 +110,7 @@ export const Message = ({
 			const timeoutId = setTimeout(() => {
 				setDisplayedMessage(message.slice(0, characterIndex + 1));
 				setCharacterIndex(characterIndex + 1);
-			}, 20);
+			}, 20); /* Message speed. Waiting time (millseconds) between each character. */
 
 			return () => {
 				clearTimeout(timeoutId);
@@ -92,18 +119,6 @@ export const Message = ({
 			setIsButtonEnabled(true);
 		}
 	}, [characterIndex, currentIndex, messages]);
-
-	const handleMessage = () => {
-		if (messages.length - 1 === currentIndex) {
-			return finishAnimation();
-		}
-
-		if (currentIndex < messages.length - 1) {
-			setCurrentIndex(currentIndex + 1);
-			setDisplayedMessage('');
-			setCharacterIndex(0);
-		}
-	};
 
 	return (
 		<Conteiner>
@@ -124,6 +139,7 @@ export const Message = ({
 								disabled={!isButtonEnabled}
 							>
 								{textButton}
+								<KeyboardLetter>A</KeyboardLetter>
 							</ButtonNext>
 						</WrappedMessages>
 					</Content>
