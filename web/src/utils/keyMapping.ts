@@ -17,6 +17,13 @@ export const HandleKeyPress = ({key, id}:KeyProps) => {
                 return true;
             }
             break;
+
+        case 'stage':
+            if(key === 'a') {
+                return true;
+            }
+            break;
+
         default:
             console.log('outro');
             break;

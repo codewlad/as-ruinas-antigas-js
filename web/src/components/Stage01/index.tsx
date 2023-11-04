@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 import { GetBloquedTiles } from '../../utils/bloquedTiles';
 import { HandleMovementStatus } from '../../utils/characterMovement';
+import { HandleKeyPress } from '../../utils/keyMapping';
 
 import { Char } from '@components/Char';
 import { Gamepad } from '@components/Gamepad';
@@ -21,7 +22,7 @@ export const Stage01 = ({
 
 	const [introStage01, setIntroStage01] = useState(true);
 
-	const [step, setStep] = useState<string>('initial');
+	const [step, setStep] = useState<string>('initial stage');
 	const [dialog01, setDialog01] = useState(false);
 
 	const conteinerRef = useRef<HTMLDivElement | null>(null);
@@ -49,18 +50,37 @@ export const Stage01 = ({
 		setStep(step);
 	};
 
+	const handleKeyPress = (event: KeyboardEvent) => {
+		const key = event.key;
+		const id = 'stage';
+		const keyPressReturn = HandleKeyPress({ key, id });
+
+		if (keyPressReturn && step === 'stage') {
+			console.log('stage');
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyPress);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyPress);
+		};
+	}, [handleKeyPress]);
+
 	useEffect(() => {
 		HandleMovementStatus(false);
 
+		console.log('STEP -> ', step);
+
 		switch (step) {
-			case 'initial':
+			case 'initial stage':
 				break;
 			case 'dialog01':
 				setDialog01(true);
 				break;
-			case 'bandage':
+			case 'stage':
 				HandleMovementStatus(true);
-				console.log('bandage');
 				break;
 			default:
 				break;
@@ -317,7 +337,7 @@ export const Stage01 = ({
 						'Acho que machuquei minha perna. Ainda bem que guardei essas bandagens num bolso separado, porque tudo o que eu tinha ficou na mochila e não faço a menor idéia de onde ela foi parar.',
 						'Está bem escuro e não consigo subir por onde caí. Espero que eu encontre o caminho para fora daqui o quanto antes...',
 					]}
-					onClose={() => closeMessage(setDialog01, 'bandage')}
+					onClose={() => closeMessage(setDialog01, 'stage')}
 					mainScreenWidth={mainScreenWidth}
 				/>
 			)}

@@ -10,7 +10,7 @@ import { Stage01 } from '@components/Stage01';
 import { Totem } from '@components/Totem';
 
 export function Home() {
-	const [step, setStep] = useState<string>('initial');
+	const [step, setStep] = useState<string>('initial home');
 
 	const [mainScreenWidth, setMainScreenWidth] = useState<number | undefined>(
 		0
@@ -49,7 +49,7 @@ export function Home() {
 		const id = 'home';
 		const keyPressReturn = HandleKeyPress({ key, id });
 
-		if (keyPressReturn && step === 'initial') {
+		if (keyPressReturn && step === 'initial home') {
 			setStep('intro');
 		}
 	};
@@ -63,8 +63,10 @@ export function Home() {
 	}, [handleKeyPress]);
 
 	useEffect(() => {
+		console.log('STEP -> ', step);
+
 		switch (step) {
-			case 'initial':
+			case 'initial home':
 				break;
 			case 'intro':
 				setStartedGame(true);
