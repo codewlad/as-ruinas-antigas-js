@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 
 import { CharacterPosition } from '../../utils/characterPosition';
+import { HandleKeyPress } from '../../utils/keyMapping';
 
 import { Message } from '@components/Message';
 
-import { Container, Content } from './styles';
+import { Container, Content, Start, KeyboardLetter } from './styles';
 import { Stage01 } from '@components/Stage01';
 import { Totem } from '@components/Totem';
 
@@ -42,6 +43,24 @@ export function Home() {
 			content.current!.scrollLeft = 0;
 		}
 	};
+
+	const handleKeyPress = (event: KeyboardEvent) => {
+		const key = event.key;
+		const id = 'home';
+		const keyPressReturn = HandleKeyPress({ key, id });
+
+		if (keyPressReturn && step === 'initial') {
+			setStep('intro');
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyPress);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyPress);
+		};
+	}, [handleKeyPress]);
 
 	useEffect(() => {
 		switch (step) {
@@ -106,7 +125,10 @@ export function Home() {
 							id='buttonStartGame'
 							onClick={() => setStep('intro')}
 						>
-							<span>Iniciar</span>
+							<Start>
+								Iniciar
+								<KeyboardLetter>A</KeyboardLetter>
+							</Start>
 							<Totem />
 						</button>
 					</>

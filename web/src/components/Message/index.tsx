@@ -13,6 +13,7 @@ import {
 } from './styles';
 
 import { HandleMovementStatus } from '../../utils/characterMovement';
+import { HandleKeyPress } from '../../utils/keyMapping';
 
 export const Message = ({
 	messages,
@@ -71,7 +72,13 @@ export const Message = ({
 	}, [currentIndex, messages, finishAnimation]);
 
 	const handleKeyPress = (event: KeyboardEvent) => {
-		if (event.key === 'a') {
+		if (!isButtonEnabled) return;
+
+		const key = event.key;
+		const id = 'message';
+		const keyPressReturn = HandleKeyPress({ key, id });
+
+		if (keyPressReturn) {
 			handleMessage();
 		}
 	};

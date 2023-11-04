@@ -17,7 +17,7 @@ export const Container = styled.div`
         -webkit-tap-highlight-color: transparent;
         outline: none;
 
-        &:hover span {
+        &:hover div:first-child {
             animation: pulse 1s ease-in-out infinite 1s;
 
             @keyframes pulse {
@@ -29,16 +29,6 @@ export const Container = styled.div`
                     transform: scale(1.1);
                 }
             }
-        }
-
-        span {
-            position: absolute;
-            top: 260px;
-            left: 147px;
-            font-size: 3rem;
-
-            transform: scale(1);
-            transition: transform 1s ease-in-out;
         }
     }
 
@@ -62,4 +52,36 @@ export const Content = styled.div`
     overflow: auto;
 
     scroll-behavior: smooth;
+`
+
+export const Start = styled.div`
+    position: absolute;
+    top: 243px;
+    left: 147px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 3rem;
+
+    transform: scale(1);
+    transition: transform 1s ease-in-out;
+`
+
+export const KeyboardLetter = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid white;
+    border-radius: 50%;
+
+    width: 2rem;
+    height: 2rem;
+
+    font-size: 1rem;
+
+    color: white;
 `
