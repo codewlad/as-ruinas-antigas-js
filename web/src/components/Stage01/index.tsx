@@ -5,7 +5,7 @@ import { HandleMovementStatus } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
 
 import { Char } from '@components/Char';
-import { Gamepad } from '@components/Gamepad';
+import { Hud } from '@components/Hud';
 
 import { Conteiner, Row, TileD, TileW, TileF, Torch } from './styles';
 import { Message } from '@components/Message';
@@ -23,6 +23,7 @@ export const Stage01 = ({
 	const [introStage01, setIntroStage01] = useState(true);
 
 	const [step, setStep] = useState<string>('initial stage');
+	const [goals, setGoals] = useState<string>('');
 	const [dialog01, setDialog01] = useState(false);
 
 	const conteinerRef = useRef<HTMLDivElement | null>(null);
@@ -80,6 +81,7 @@ export const Stage01 = ({
 				setDialog01(true);
 				break;
 			case 'stage':
+				setGoals('Encontre e acenda uma tocha');
 				HandleMovementStatus(true);
 				break;
 			default:
@@ -327,7 +329,11 @@ export const Stage01 = ({
 				}}
 			/>
 
-			<Gamepad updateTorchPosition={updateTorchPosition} />
+			<Hud
+				updateTorchPosition={updateTorchPosition}
+				mainScreenWidth={mainScreenWidth}
+				goals={goals}
+			/>
 
 			{dialog01 && (
 				<Message

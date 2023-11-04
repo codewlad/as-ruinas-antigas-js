@@ -1,19 +1,34 @@
 import React, { useState } from 'react';
-import { Conteiner, Sticky, Pad, Up, Left, Right, Down } from './styles';
+import {
+	Conteiner,
+	Sticky,
+	Pad,
+	Up,
+	Left,
+	Right,
+	Down,
+	Goals,
+	Items,
+} from './styles';
 
 import imgUp from '@assets/arrow-up.svg';
 import imgLeft from '@assets/arrow-left.svg';
 import imgRight from '@assets/arrow-right.svg';
 import imgDown from '@assets/arrow-down.svg';
+import imgStarBold from '@assets/star-bold.svg';
 
 import { handleMovement } from '../../utils/characterMovement';
 
 type UpdateTorchPosition = (left: number, top: number) => void;
 
-export const Gamepad = ({
+export const Hud = ({
 	updateTorchPosition,
+	mainScreenWidth,
+	goals,
 }: {
 	updateTorchPosition: UpdateTorchPosition;
+	mainScreenWidth: number | undefined;
+	goals: string;
 }) => {
 	const preventSpacebarActivation = (
 		e: React.KeyboardEvent<HTMLButtonElement>
@@ -61,7 +76,11 @@ export const Gamepad = ({
 
 	return (
 		<Conteiner>
-			<Sticky>
+			<Sticky
+				style={{
+					width: `${mainScreenWidth}px`,
+				}}
+			>
 				<Pad>
 					<Up>
 						<button
@@ -124,6 +143,18 @@ export const Gamepad = ({
 						</button>
 					</Down>
 				</Pad>
+
+				{goals && (
+					<Goals>
+						<img
+							src={imgStarBold}
+							alt='Estrela'
+						/>
+						<p>{goals}</p>
+					</Goals>
+				)}
+
+				<Items></Items>
 			</Sticky>
 		</Conteiner>
 	);

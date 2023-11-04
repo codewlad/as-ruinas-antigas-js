@@ -117,7 +117,7 @@ export const Message = ({
 			const timeoutId = setTimeout(() => {
 				setDisplayedMessage(message.slice(0, characterIndex + 1));
 				setCharacterIndex(characterIndex + 1);
-			}, 20); /* Message speed. Waiting time (millseconds) between each character. */
+			}, 0); /* Message speed. Waiting time (millseconds) between each character. */
 
 			return () => {
 				clearTimeout(timeoutId);
