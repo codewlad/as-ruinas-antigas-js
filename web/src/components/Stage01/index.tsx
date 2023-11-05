@@ -27,7 +27,7 @@ export const Stage01 = ({
 	const [introStage01, setIntroStage01] = useState(true);
 
 	const [step, setStep] = useState<string>('initial stage');
-	const [goals, setGoals] = useState<string>('');
+	const [goals, setGoals] = useState<string[]>([]);
 	const [dialog01, setDialog01] = useState(false);
 
 	const conteinerRef = useRef<HTMLDivElement | null>(null);
@@ -85,7 +85,11 @@ export const Stage01 = ({
 				setDialog01(true);
 				break;
 			case 'stage':
-				setGoals('Encontre e acenda uma tocha');
+				setGoals([
+					'Encontre uma pederneira',
+					'Encontre uma tocha',
+					'Acenda a tocha e encontre a saída',
+				]);
 				HandleMovementStatus(true);
 				break;
 			default:

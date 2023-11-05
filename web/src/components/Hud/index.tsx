@@ -28,7 +28,7 @@ export const Hud = ({
 }: {
 	updateTorchPosition: UpdateTorchPosition;
 	mainScreenWidth: number | undefined;
-	goals: string;
+	goals: string[];
 }) => {
 	const preventSpacebarActivation = (
 		e: React.KeyboardEvent<HTMLButtonElement>
@@ -144,16 +144,19 @@ export const Hud = ({
 					</Down>
 				</Pad>
 
-				{goals && (
+				{goals.length > 0 && (
 					<Goals>
-						<img
-							src={imgStarBold}
-							alt='Estrela'
-						/>
-						<p>{goals}</p>
+						{goals.map((goal, index) => (
+							<div key={index}>
+								<img
+									src={imgStarBold}
+									alt='Estrela'
+								/>
+								<p>{goal}</p>
+							</div>
+						))}
 					</Goals>
 				)}
-
 				<Items></Items>
 			</Sticky>
 		</Conteiner>
