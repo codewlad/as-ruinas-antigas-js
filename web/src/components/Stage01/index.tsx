@@ -357,6 +357,7 @@ export const Stage01 = ({
 			)}
 
 			<Item
+				className='item'
 				style={{
 					top: '432px',
 					left: '432px',
