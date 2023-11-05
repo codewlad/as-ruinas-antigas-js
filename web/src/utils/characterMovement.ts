@@ -21,8 +21,8 @@ export const HandleMovementStatus = (value: boolean) => {
 
 const updateSprite = (frame: number, char: HTMLDivElement | null) => {
     const frameX = (frame % 3) * 48;
-        const frameY = Math.floor(frame / 3) * 48;
-        char!.style.backgroundPosition = `-${frameX}px -${frameY}px`;
+    const frameY = Math.floor(frame / 3) * 48;
+    char!.style.backgroundPosition = `-${frameX}px -${frameY}px`;
 }
 
 const moveCharacter = (

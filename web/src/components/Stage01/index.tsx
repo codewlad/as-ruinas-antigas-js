@@ -4,11 +4,13 @@ import { GetBloquedTiles } from '../../utils/bloquedTiles';
 import { HandleMovementStatus } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
 
+import { Items } from '../../utils/items';
+
 import { Char } from '@components/Char';
 import { Hud } from '@components/Hud';
-
-import { Conteiner, Row, TileD, TileW, TileF, Torch } from './styles';
 import { Message } from '@components/Message';
+
+import { Conteiner, Row, TileD, TileW, TileF, Torch, Item } from './styles';
 
 export const Stage01 = ({
 	content,
@@ -17,6 +19,8 @@ export const Stage01 = ({
 	content: React.RefObject<HTMLDivElement>;
 	mainScreenWidth: number | undefined;
 }) => {
+	const torch = Items[2];
+
 	const [posX, setPosX] = useState(48 + 24);
 	const [posY, setPosY] = useState(288 + 24);
 
@@ -347,6 +351,15 @@ export const Stage01 = ({
 					mainScreenWidth={mainScreenWidth}
 				/>
 			)}
+
+			<Item
+				style={{
+					top: '432px',
+					left: '432px',
+					background: `url(${torch.image})`,
+					backgroundPosition: `${torch.frame}`,
+				}}
+			></Item>
 		</Conteiner>
 	);
 };
