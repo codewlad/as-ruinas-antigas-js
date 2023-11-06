@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { GetBloquedTiles } from '../../utils/bloquedTiles';
 import { HandleMovementStatus } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
+import { GetStageEvents } from '../../utils/stageEvents';
 
 import { Items } from '../../utils/items';
 
@@ -55,13 +56,27 @@ export const Stage01 = ({
 		setStep(step);
 	};
 
+	const getTorch = () => {
+		console.log('pegou a tocha');
+	};
+
 	const handleKeyPress = (event: KeyboardEvent) => {
 		const key = event.key;
 		const id = 'stage';
 		const keyPressReturn = HandleKeyPress({ key, id });
 
-		if (keyPressReturn && step === 'stage') {
-			console.log('stage');
+		if (keyPressReturn && keyPressReturn !== true && step === 'stage') {
+			// Verifique se keyPressReturn não é 'true' e é uma instância de 'EventReturnProps'
+			if ('event' in keyPressReturn) {
+				switch (keyPressReturn.event) {
+					case 'tocha':
+						getTorch();
+						break;
+					default:
+						console.log('stage');
+						break;
+				}
+			}
 		}
 	};
 
@@ -99,6 +114,7 @@ export const Stage01 = ({
 
 	useEffect(() => {
 		GetBloquedTiles();
+		GetStageEvents();
 
 		if (introStage01) {
 			scene01();
@@ -358,6 +374,7 @@ export const Stage01 = ({
 
 			<Item
 				className='item'
+				id={torch.name}
 				style={{
 					top: '432px',
 					left: '432px',

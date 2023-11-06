@@ -1,5 +1,5 @@
 import { BloquedTiles } from '../utils/bloquedTiles';
-import { CharacterPosition } from '../utils/characterPosition';
+import { CharacterPosition, CharacterFace } from '../utils/characterPosition';
 import { MovementInformation } from '../utils/characterInfo';
 
 let keydown = '';
@@ -16,106 +16,146 @@ let animationInterval = 0;
 let movementStatus = true;
 
 export const HandleMovementStatus = (value: boolean) => {
-    movementStatus = value
-}
-
-const updateSprite = (frame: number, char: HTMLDivElement | null) => {
-    const frameX = (frame % 3) * 48;
-    const frameY = Math.floor(frame / 3) * 48;
-    char!.style.backgroundPosition = `-${frameX}px -${frameY}px`;
-}
-
-const moveCharacter = (
-    animationFrames: number[],
-    moveX: number,
-    moveY: number,
-    char: HTMLDivElement | null,
-    halfStageWidth: number,
-    halfStageHeight: number,
-    content: any,
-    updateTorchPosition: any
-) => {
-    
-    if (animationInterval) return;
-
-    const interval = 120;
-    const frameCount = animationFrames.length;
-    frameIndex = 0;
-
-    animationInterval = setInterval(() => {
-        updateSprite(animationFrames[frameIndex], char);
-
-        
-        const currentLeft = parseInt(char!.style.left);
-        const currentTop = parseInt(char!.style.top);
-        char!.style.left = currentLeft + moveX + 'px';
-        char!.style.top = currentTop + moveY + 'px';
-
-        updateTorchPosition(
-            parseInt(char!.style.left),
-            parseInt(char!.style.top)
-        );
-
-        if (keydown === 'ArrowRight') {
-            CharacterPosition.posX + 48 > halfStageWidth
-                ? (content!.scrollLeft += 12)
-                : null;
-        } else if (keydown === 'ArrowLeft') {
-            CharacterPosition.posX - 48 - content.scrollLeft <
-            halfStageWidth
-                ? (content!.scrollLeft -= 12)
-                : null;
-        } else if (keydown === 'ArrowUp') {
-            CharacterPosition.posY > halfStageHeight
-                ? (content!.scrollTop += 12)
-                : null;
-        } else if (keydown === 'ArrowDown') {
-            CharacterPosition.posY - content!.scrollTop <
-            halfStageHeight
-                ? (content!.scrollTop -= 12)
-                : null;
-        }
-
-        frameIndex ++;
-
-        if (frameIndex === frameCount) {
-            if (animationInterval !== 0) {
-                clearInterval(animationInterval);
-                animationInterval = 0;
-
-                CharacterPosition.posX = parseInt(char!.style.left);
-                CharacterPosition.posY = parseInt(char!.style.top);                
-            }
-        }
-    }, interval);
+	movementStatus = value;
 };
 
-export const handleMovement = (key: string, updateTorchPosition: (newPosX: number, newPosY: number) => void) => {
-    if(!movementStatus) return
+const updateSprite = (frame: number, char: HTMLDivElement | null) => {
+	const frameX = (frame % 3) * 48;
+	const frameY = Math.floor(frame / 3) * 48;
+	char!.style.backgroundPosition = `-${frameX}px -${frameY}px`;
+};
 
-    const {char, halfStageWidth, halfStageHeight, stageContent} = MovementInformation
-    keydown = key;
-		const isBlocked = (x: number, y: number) =>
-			BloquedTiles.find(
-				(item) =>
-					item.posX === CharacterPosition.posX + x &&
-					item.posY === CharacterPosition.posY + y
-			);
-		if (key === 'ArrowRight') {
-			isBlocked(48, 0)
-				? updateSprite(7, char)
-				: moveCharacter(animationFramesRight, 12, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
-		} else if (key === 'ArrowLeft') {
-			isBlocked(-48, 0)
-				? updateSprite(4, char)
-				: moveCharacter(animationFramesLeft, -12, 0, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
-		} else if (key === 'ArrowUp') {
-			isBlocked(0, -48)
-				? updateSprite(10, char)
-				: moveCharacter(animationFramesUp, 0, -12, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
-		} else if (key === 'ArrowDown') {
-			isBlocked(0, 48)
-				? updateSprite(1, char)
-				: moveCharacter(animationFramesDown, 0, 12, char, halfStageWidth, halfStageHeight, stageContent, updateTorchPosition);
+const moveCharacter = (
+	animationFrames: number[],
+	moveX: number,
+	moveY: number,
+	char: HTMLDivElement | null,
+	halfStageWidth: number,
+	halfStageHeight: number,
+	content: any,
+	updateTorchPosition: any
+) => {
+	if (animationInterval) return;
+
+	const interval = 120;
+	const frameCount = animationFrames.length;
+	frameIndex = 0;
+
+	animationInterval = setInterval(() => {
+		updateSprite(animationFrames[frameIndex], char);
+
+		const currentLeft = parseInt(char!.style.left);
+		const currentTop = parseInt(char!.style.top);
+		char!.style.left = currentLeft + moveX + 'px';
+		char!.style.top = currentTop + moveY + 'px';
+
+		updateTorchPosition(
+			parseInt(char!.style.left),
+			parseInt(char!.style.top)
+		);
+
+		if (keydown === 'ArrowRight') {
+			CharacterPosition.posX + 48 > halfStageWidth
+				? (content!.scrollLeft += 12)
+				: null;
+		} else if (keydown === 'ArrowLeft') {
+			CharacterPosition.posX - 48 - content.scrollLeft < halfStageWidth
+				? (content!.scrollLeft -= 12)
+				: null;
+		} else if (keydown === 'ArrowUp') {
+			CharacterPosition.posY > halfStageHeight
+				? (content!.scrollTop += 12)
+				: null;
+		} else if (keydown === 'ArrowDown') {
+			CharacterPosition.posY - content!.scrollTop < halfStageHeight
+				? (content!.scrollTop -= 12)
+				: null;
 		}
-}
+
+		frameIndex++;
+
+		if (frameIndex === frameCount) {
+			if (animationInterval !== 0) {
+				clearInterval(animationInterval);
+				animationInterval = 0;
+
+				CharacterPosition.posX = parseInt(char!.style.left);
+				CharacterPosition.posY = parseInt(char!.style.top);
+			}
+		}
+	}, interval);
+};
+
+export const handleMovement = (
+	key: string,
+	updateTorchPosition: (newPosX: number, newPosY: number) => void
+) => {
+	if (!movementStatus) return;
+
+	const { char, halfStageWidth, halfStageHeight, stageContent } =
+		MovementInformation;
+	keydown = key;
+	const isBlocked = (x: number, y: number) =>
+		BloquedTiles.find(
+			(item) =>
+				item.posX === CharacterPosition.posX + x &&
+				item.posY === CharacterPosition.posY + y
+		);
+	if (key === 'ArrowRight') {
+		CharacterFace.direction = 'right';
+		isBlocked(48, 0)
+			? updateSprite(7, char)
+			: moveCharacter(
+					animationFramesRight,
+					12,
+					0,
+					char,
+					halfStageWidth,
+					halfStageHeight,
+					stageContent,
+					updateTorchPosition
+			  );
+	} else if (key === 'ArrowLeft') {
+		CharacterFace.direction = 'left';
+		isBlocked(-48, 0)
+			? updateSprite(4, char)
+			: moveCharacter(
+					animationFramesLeft,
+					-12,
+					0,
+					char,
+					halfStageWidth,
+					halfStageHeight,
+					stageContent,
+					updateTorchPosition
+			  );
+	} else if (key === 'ArrowUp') {
+		CharacterFace.direction = 'up';
+		isBlocked(0, -48)
+			? updateSprite(10, char)
+			: moveCharacter(
+					animationFramesUp,
+					0,
+					-12,
+					char,
+					halfStageWidth,
+					halfStageHeight,
+					stageContent,
+					updateTorchPosition
+			  );
+	} else if (key === 'ArrowDown') {
+		CharacterFace.direction = 'down';
+		isBlocked(0, 48)
+			? updateSprite(1, char)
+			: moveCharacter(
+					animationFramesDown,
+					0,
+					12,
+					char,
+					halfStageWidth,
+					halfStageHeight,
+					stageContent,
+					updateTorchPosition
+			  );
+	}
+};
