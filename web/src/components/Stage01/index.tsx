@@ -28,10 +28,27 @@ export const Stage01 = ({
 	const [introStage01, setIntroStage01] = useState(true);
 
 	const [step, setStep] = useState<string>('initial stage');
-	const [goals, setGoals] = useState<string[]>([]);
 	const [dialog01, setDialog01] = useState(false);
 
+	type Goal = {
+		id: string;
+		message: string;
+		status: string;
+	};
+
+	const [goals, setGoals] = useState<Goal[]>([]);
+
 	const conteinerRef = useRef<HTMLDivElement | null>(null);
+
+	const updateGoals = (id: string) => {
+		const updatedGoals = goals.map((goal) => {
+			if (goal.id === id) {
+				return { ...goal, status: 'complete' };
+			}
+			return goal;
+		});
+		setGoals(updatedGoals);
+	};
 
 	const updateTorchPosition = (newPosX: number, newPosY: number) => {
 		setPosX(newPosX + 24);
@@ -58,6 +75,7 @@ export const Stage01 = ({
 
 	const getTorch = () => {
 		console.log('pegou a tocha');
+		updateGoals('event0001-torch');
 	};
 
 	const handleKeyPress = (event: KeyboardEvent) => {
@@ -69,7 +87,7 @@ export const Stage01 = ({
 			// Verifique se keyPressReturn não é 'true' e é uma instância de 'EventReturnProps'
 			if ('event' in keyPressReturn) {
 				switch (keyPressReturn.event) {
-					case 'tocha':
+					case 'event0001-torch':
 						getTorch();
 						break;
 					default:
@@ -101,9 +119,21 @@ export const Stage01 = ({
 				break;
 			case 'stage':
 				setGoals([
-					'Encontre uma pederneira',
-					'Encontre uma tocha',
-					'Acenda a tocha e encontre a saída',
+					{
+						id: 'event0002-flint',
+						message: 'Encontre uma pederneira',
+						status: 'active',
+					},
+					{
+						id: 'event0001-torch',
+						message: 'Encontre uma tocha',
+						status: 'active',
+					},
+					{
+						id: 'event0003-acenda',
+						message: 'Acenda a tocha e encontre a saída',
+						status: 'active',
+					},
 				]);
 				HandleMovementStatus(true);
 				break;
@@ -374,7 +404,7 @@ export const Stage01 = ({
 
 			<Item
 				className='item'
-				id={torch.name}
+				id='event0001-torch'
 				style={{
 					top: '432px',
 					left: '432px',

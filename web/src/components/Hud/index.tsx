@@ -21,6 +21,12 @@ import { handleMovement } from '../../utils/characterMovement';
 
 type UpdateTorchPosition = (left: number, top: number) => void;
 
+type Goal = {
+	id: string;
+	message: string;
+	status: string;
+};
+
 export const Hud = ({
 	updateTorchPosition,
 	mainScreenWidth,
@@ -28,7 +34,7 @@ export const Hud = ({
 }: {
 	updateTorchPosition: UpdateTorchPosition;
 	mainScreenWidth: number | undefined;
-	goals: string[];
+	goals: Goal[];
 }) => {
 	const preventSpacebarActivation = (
 		e: React.KeyboardEvent<HTMLButtonElement>
@@ -152,7 +158,18 @@ export const Hud = ({
 									src={imgStarBold}
 									alt='Estrela'
 								/>
-								<p>{goal}</p>
+
+								{goal.status === 'active' ? (
+									<p>{goal.message}</p>
+								) : (
+									<p
+										style={{
+											textDecoration: 'line-through',
+										}}
+									>
+										{goal.message}
+									</p>
+								)}
 							</div>
 						))}
 					</Goals>
