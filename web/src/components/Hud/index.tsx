@@ -18,6 +18,7 @@ import imgDown from '@assets/arrow-down.svg';
 import imgStarBold from '@assets/star-bold.svg';
 
 import { handleMovement } from '../../utils/characterMovement';
+import { HandleKeyPress } from '../../utils/keyMapping';
 
 type UpdateTorchPosition = (left: number, top: number) => void;
 
@@ -31,10 +32,12 @@ export const Hud = ({
 	updateTorchPosition,
 	mainScreenWidth,
 	goals,
+	updateGoals,
 }: {
 	updateTorchPosition: UpdateTorchPosition;
 	mainScreenWidth: number | undefined;
 	goals: Goal[];
+	updateGoals: any;
 }) => {
 	const preventSpacebarActivation = (
 		e: React.KeyboardEvent<HTMLButtonElement>
@@ -77,6 +80,17 @@ export const Hud = ({
 	const handleMouseLeave = () => {
 		if (pressedButton) {
 			stopMovement();
+		}
+	};
+
+	// Event to handle button A click or touch
+	const handleButtonA = (key: string, id: string) => {
+		const returnItemClick = HandleKeyPress({ key, id });
+
+		if (returnItemClick && returnItemClick !== true) {
+			if ('event' in returnItemClick) {
+				updateGoals(returnItemClick.event);
+			}
 		}
 	};
 
@@ -174,7 +188,14 @@ export const Hud = ({
 						))}
 					</Goals>
 				)}
-				<Items></Items>
+				<Items>
+					<button
+						onMouseDown={() => handleButtonA('a', 'stage')}
+						onTouchStart={() => handleButtonA('a', 'stage')}
+					>
+						A
+					</button>
+				</Items>
 			</Sticky>
 		</Conteiner>
 	);

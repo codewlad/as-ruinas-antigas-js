@@ -84,7 +84,6 @@ export const Stage01 = ({
 		const keyPressReturn = HandleKeyPress({ key, id });
 
 		if (keyPressReturn && keyPressReturn !== true && step === 'stage') {
-			// Verifique se keyPressReturn não é 'true' e é uma instância de 'EventReturnProps'
 			if ('event' in keyPressReturn) {
 				switch (keyPressReturn.event) {
 					case 'event0001-torch':
@@ -387,6 +386,7 @@ export const Stage01 = ({
 				updateTorchPosition={updateTorchPosition}
 				mainScreenWidth={mainScreenWidth}
 				goals={goals}
+				updateGoals={updateGoals}
 			/>
 
 			{dialog01 && (

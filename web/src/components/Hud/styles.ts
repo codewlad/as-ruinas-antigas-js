@@ -99,13 +99,25 @@ export const Items = styled.div`
 	bottom: 0;
 	right: 0;
 
-	padding: 0.4rem 0.8rem;
 	border-radius: 0.4rem;
 
 	display: flex;
+	flex-direction: column-reverse;
+	gap: 1.6rem;
 
 	width: 4.8rem;
 	height: 100%;
 
 	//background-color: #00009955;
+
+	> button {
+		width: 4.8rem;
+		height: 4.8rem;
+		border-radius: 50%;
+		padding: 0;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 `;
