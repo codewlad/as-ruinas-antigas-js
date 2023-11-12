@@ -3,9 +3,10 @@ type BloquedTilesProps = {
 	posY: number;
 };
 
-export const BloquedTiles: BloquedTilesProps[] = [];
+export let BloquedTiles: BloquedTilesProps[] = [];
 
 export const GetBloquedTiles = () => {
+	BloquedTiles = [];
 	const wallElements = document.getElementsByClassName('tw');
 	const divisionElements = document.getElementsByClassName('td');
 	const itemElements = document.getElementsByClassName('item');

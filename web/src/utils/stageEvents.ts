@@ -6,9 +6,10 @@ type EventsProps = {
 	eventName: string;
 };
 
-export const StageEvents: EventsProps[] = [];
+export let StageEvents: EventsProps[] = [];
 
 export const GetStageEvents = () => {
+	StageEvents = [];
 	const stageEvents = document.getElementsByClassName('item');
 
 	for (var i = 0; i < stageEvents.length; i++) {
@@ -36,4 +37,9 @@ export const CheckStageEvent = (x: number, y: number) => {
 	);
 
 	return eventExists?.eventName;
+};
+
+export const RemoveEvent = (eventID: string) => {
+	const eventDiv = document.getElementById(eventID);
+	eventDiv?.remove();
 };

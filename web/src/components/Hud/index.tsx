@@ -19,6 +19,8 @@ import imgStarBold from '@assets/star-bold.svg';
 
 import { handleMovement } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
+import { RemoveEvent, GetStageEvents } from '../../utils/stageEvents';
+import { GetBloquedTiles } from '../../utils/bloquedTiles';
 
 type UpdateTorchPosition = (left: number, top: number) => void;
 
@@ -90,6 +92,9 @@ export const Hud = ({
 		if (returnItemClick && returnItemClick !== true) {
 			if ('event' in returnItemClick) {
 				updateGoals(returnItemClick.event);
+				RemoveEvent(returnItemClick.event!);
+				GetBloquedTiles();
+				GetStageEvents();
 			}
 		}
 	};

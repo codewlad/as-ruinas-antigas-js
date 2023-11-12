@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { GetBloquedTiles } from '../../utils/bloquedTiles';
 import { HandleMovementStatus } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
-import { GetStageEvents } from '../../utils/stageEvents';
+import { GetStageEvents, RemoveEvent } from '../../utils/stageEvents';
 
 import { Items } from '../../utils/items';
 
@@ -74,8 +74,10 @@ export const Stage01 = ({
 	};
 
 	const getTorch = () => {
-		console.log('pegou a tocha');
 		updateGoals('event0001-torch');
+		RemoveEvent('event0001-torch');
+		GetBloquedTiles();
+		GetStageEvents();
 	};
 
 	const handleKeyPress = (event: KeyboardEvent) => {
@@ -107,8 +109,6 @@ export const Stage01 = ({
 
 	useEffect(() => {
 		HandleMovementStatus(false);
-
-		console.log('STEP -> ', step);
 
 		switch (step) {
 			case 'initial stage':
