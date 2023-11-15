@@ -1,9 +1,4 @@
-type BloquedTilesProps = {
-	posX: number;
-	posY: number;
-};
-
-export let BloquedTiles: BloquedTilesProps[] = [];
+export let BloquedTiles = [];
 
 export const GetBloquedTiles = () => {
 	BloquedTiles = [];
@@ -17,7 +12,7 @@ export const GetBloquedTiles = () => {
 	];
 
 	for (var i = 0; i < AllBloquedElements.length; i++) {
-		const element = AllBloquedElements[i] as HTMLElement;
+		const element = AllBloquedElements[i];
 
 		const offsetLeft = element.offsetLeft;
 		const offsetTop = element.offsetTop;

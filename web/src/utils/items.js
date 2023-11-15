@@ -1,10 +1,10 @@
-import imgItems from '@assets/items.png';
+import imgItems from '../assets/items.png';
 
-const frameX = (id: number) => {
+const frameX = (id) => {
 	return ((id - 1) % 10) * 48 + 'px';
 };
 
-const frameY = (id: number) => {
+const frameY = (id) => {
 	return Math.floor((id - 1) / 10) * 48 + 'px';
 };
 

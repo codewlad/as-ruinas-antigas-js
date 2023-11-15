@@ -6,19 +6,14 @@ import { MovementInformation } from '../../utils/characterInfo';
 
 import { Character } from './styles';
 
-type UpdateTorchPosition = (left: number, top: number) => void;
-
 export const Char = ({
 	updateTorchPosition,
 	content,
-}: {
-	updateTorchPosition: UpdateTorchPosition;
-	content: React.RefObject<HTMLDivElement>;
 }) => {
-	let stageWidth = content.current!.offsetWidth;
-	let stageHeight = content.current!.offsetHeight;
+	let stageWidth = content.current.offsetWidth;
+	let stageHeight = content.current.offsetHeight;
 
-	const characterRef = useRef<HTMLDivElement | null>(null);
+	const characterRef = useRef(null);
 
 	MovementInformation.halfStageWidth = Math.floor(stageWidth / 2 / 48) * 48;
 	MovementInformation.halfStageHeight = Math.floor(stageHeight / 2 / 48) * 48;
@@ -30,9 +25,9 @@ export const Char = ({
 
 	const handleResize = () => {
 		MovementInformation.halfStageWidth =
-			Math.floor(content.current!.offsetWidth / 2 / 48) * 48;
+			Math.floor(content.current.offsetWidth / 2 / 48) * 48;
 		MovementInformation.halfStageHeight =
-			Math.floor(content.current!.offsetHeight / 2 / 48) * 48;
+			Math.floor(content.current.offsetHeight / 2 / 48) * 48;
 	};
 
 	useEffect(() => {

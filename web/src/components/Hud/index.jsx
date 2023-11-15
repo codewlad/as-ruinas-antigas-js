@@ -11,24 +11,16 @@ import {
 	Items,
 } from './styles';
 
-import imgUp from '@assets/arrow-up.svg';
-import imgLeft from '@assets/arrow-left.svg';
-import imgRight from '@assets/arrow-right.svg';
-import imgDown from '@assets/arrow-down.svg';
-import imgStarBold from '@assets/star-bold.svg';
+import imgUp from '../../assets/arrow-up.svg';
+import imgLeft from '../../assets/arrow-left.svg';
+import imgRight from '../../assets/arrow-right.svg';
+import imgDown from '../../assets/arrow-down.svg';
+import imgStarBold from '../../assets/star-bold.svg';
 
 import { handleMovement } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
 import { RemoveEvent, GetStageEvents } from '../../utils/stageEvents';
 import { GetBloquedTiles } from '../../utils/bloquedTiles';
-
-type UpdateTorchPosition = (left: number, top: number) => void;
-
-type Goal = {
-	id: string;
-	message: string;
-	status: string;
-};
 
 export const Hud = ({
 	updateTorchPosition,
@@ -36,28 +28,18 @@ export const Hud = ({
 	goals,
 	updateGoals,
 	setStep,
-}: {
-	updateTorchPosition: UpdateTorchPosition;
-	mainScreenWidth: number | undefined;
-	goals: Goal[];
-	updateGoals: any;
-	setStep: any;
 }) => {
-	const preventSpacebarActivation = (
-		e: React.KeyboardEvent<HTMLButtonElement>
-	) => {
+	const preventSpacebarActivation = (e) => {
 		if (e.key === ' ' || e.key === 'Spacebar') {
 			e.preventDefault();
 		}
 	};
 
-	const [pressedButton, setPressedButton] = useState<string | null>(null);
-	const [pressedButtonInterval, setPressedButtonInterval] = useState<
-		number | undefined
-	>(0);
+	const [pressedButton, setPressedButton] = useState(null);
+	const [pressedButtonInterval, setPressedButtonInterval] = useState(0);
 
 	// Função para iniciar o movimento
-	const startMovement = (direction: string) => {
+	const startMovement = (direction) => {
 		setPressedButton(direction);
 
 		// Executar ação imediatamente
@@ -88,14 +70,14 @@ export const Hud = ({
 	};
 
 	// Event to handle button A click or touch
-	const handleButtonA = (key: string, id: string) => {
+	const handleButtonA = (key, id) => {
 		const returnItemClick = HandleKeyPress({ key, id });
 
 		if (returnItemClick && returnItemClick !== true) {
 			if ('event' in returnItemClick) {
 				setStep('');
 				updateGoals(returnItemClick.event);
-				RemoveEvent(returnItemClick.event!);
+				RemoveEvent(returnItemClick.event);
 				GetBloquedTiles();
 				GetStageEvents();
 			}

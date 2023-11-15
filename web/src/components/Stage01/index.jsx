@@ -7,18 +7,15 @@ import { GetStageEvents, RemoveEvent } from '../../utils/stageEvents';
 
 import { Items } from '../../utils/items';
 
-import { Char } from '@components/Char';
-import { Hud } from '@components/Hud';
-import { Message } from '@components/Message';
+import { Char } from '../Char';
+import { Hud } from '../Hud';
+import { Message } from '../Message';
 
 import { Conteiner, Row, TileD, TileW, TileF, Torch, Item } from './styles';
 
 export const Stage01 = ({
 	content,
 	mainScreenWidth,
-}: {
-	content: React.RefObject<HTMLDivElement>;
-	mainScreenWidth: number | undefined;
 }) => {
 	const torch = Items[2];
 
@@ -27,21 +24,15 @@ export const Stage01 = ({
 
 	const [introStage01, setIntroStage01] = useState(true);
 
-	const [step, setStep] = useState<string>('initial stage');
+	const [step, setStep] = useState('initial stage');
 	const [dialog01, setDialog01] = useState(false);
 	const [messageGetTorch, setMessageGetTorch] = useState(false);
 
-	type Goal = {
-		id: string;
-		message: string;
-		status: string;
-	};
+	const [goals, setGoals] = useState([]);
 
-	const [goals, setGoals] = useState<Goal[]>([]);
+	const conteinerRef = useRef(null);
 
-	const conteinerRef = useRef<HTMLDivElement | null>(null);
-
-	const updateGoals = (id: string) => {
+	const updateGoals = (id) => {
 		const updatedGoals = goals.map((goal) => {
 			if (goal.id === id) {
 				return { ...goal, status: 'complete' };
@@ -51,13 +42,13 @@ export const Stage01 = ({
 		setGoals(updatedGoals);
 	};
 
-	const updateTorchPosition = (newPosX: number, newPosY: number) => {
+	const updateTorchPosition = (newPosX, newPosY) => {
 		setPosX(newPosX + 24);
 		setPosY(newPosY + 24);
 	};
 
 	const scene01 = () => {
-		conteinerRef.current!.style.animation =
+		conteinerRef.current.style.animation =
 			'fade-in 1s forwards, moveRightLeft 0.5s ease-in-out 2';
 
 		setTimeout(() => {
@@ -66,10 +57,7 @@ export const Stage01 = ({
 		}, 1500);
 	};
 
-	const closeMessage = (
-		setStateFunction: React.Dispatch<React.SetStateAction<boolean>>,
-		step: string
-	) => {
+	const closeMessage = (setStateFunction,step) => {
 		setStateFunction(false);
 		setStep(step);
 	};
@@ -83,7 +71,7 @@ export const Stage01 = ({
 		GetStageEvents();
 	};
 
-	const handleKeyPress = (event: KeyboardEvent) => {
+	const handleKeyPress = (event) => {
 		const key = event.key;
 		const id = 'stage';
 		const keyPressReturn = HandleKeyPress({ key, id });

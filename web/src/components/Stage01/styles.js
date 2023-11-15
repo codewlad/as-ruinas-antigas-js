@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import tileDivision from '@assets/division-0.png';
-import tileWall from '@assets/wall-0.png';
-import tileFloor from '@assets/floor-0.png';
+import tileDivision from '../../assets/division-0.png';
+import tileWall from '../../assets/wall-0.png';
+import tileFloor from '../../assets/floor-0.png';
 
 export const Conteiner = styled.div`
 	position: relative;

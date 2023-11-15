@@ -1,19 +1,9 @@
-import { CharacterPosition, CharacterFace } from '../utils/characterPosition';
+import { CharacterPosition, CharacterFace } from './characterPosition';
 
-import { CheckStageEvent } from '../utils/stageEvents';
+import { CheckStageEvent } from './stageEvents';
 
-type KeyProps = {
-	key: string;
-	id: string;
-};
-
-type EventReturnProps = {
-	status: boolean | undefined;
-	event: string | undefined;
-};
-
-export const HandleKeyPress = ({ key, id }: KeyProps) => {
-	const eventReturn: EventReturnProps = {
+export const HandleKeyPress = ({ key, id }) => {
+	const eventReturn = {
 		status: false,
 		event: '',
 	};

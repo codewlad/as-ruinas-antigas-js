@@ -3,48 +3,45 @@ import { useState, useRef, useEffect } from 'react';
 import { CharacterPosition } from '../../utils/characterPosition';
 import { HandleKeyPress } from '../../utils/keyMapping';
 
-import { Message } from '@components/Message';
+import { Message } from '../../components/Message';
 
 import { Container, Content, Start, KeyboardLetter } from './styles';
-import { Stage01 } from '@components/Stage01';
-import { Totem } from '@components/Totem';
+import { Stage01 } from '../../components/Stage01';
+import { Totem } from '../../components/Totem';
 
 export function Home() {
-	const [step, setStep] = useState<string>('initial home');
+	const [step, setStep] = useState('initial home');
 
-	const [mainScreenWidth, setMainScreenWidth] = useState<number | undefined>(
+	const [mainScreenWidth, setMainScreenWidth] = useState(
 		0
 	);
 
-	const [startedGame, setStartedGame] = useState<boolean>(false);
-	const [intro, setIntro] = useState<boolean>(false);
-	const [stage01, setStage01] = useState<boolean>(false);
+	const [startedGame, setStartedGame] = useState(false);
+	const [intro, setIntro] = useState(false);
+	const [stage01, setStage01] = useState(false);
 
-	const content = useRef<HTMLDivElement>(null);
+	const content = useRef(null);
 
-	const closeMessage = (
-		setStateFunction: React.Dispatch<React.SetStateAction<boolean>>,
-		step: string
-	) => {
+	const closeMessage = (setStateFunction, step) => {
 		setStateFunction(false);
 		setStep(step);
 	};
 
 	const handleResize = () => {
-		setMainScreenWidth(content.current!.offsetWidth);
+		setMainScreenWidth(content.current.offsetWidth);
 		const scrollLeft =
 			Math.ceil(
-				(CharacterPosition.posX - content.current!.offsetWidth / 2) / 48
+				(CharacterPosition.posX - content.current.offsetWidth / 2) / 48
 			) * 48;
 
 		if (scrollLeft > 0) {
-			content.current!.scrollLeft = scrollLeft;
+			content.current.scrollLeft = scrollLeft;
 		} else {
-			content.current!.scrollLeft = 0;
+			content.current.scrollLeft = 0;
 		}
 	};
 
-	const handleKeyPress = (event: KeyboardEvent) => {
+	const handleKeyPress = (event) => {
 		const key = event.key;
 		const id = 'home';
 		const keyPressReturn = HandleKeyPress({ key, id });
@@ -103,7 +100,7 @@ export function Home() {
 			}
 		});
 
-		content.current!.addEventListener('touchmove', function (event) {
+		content.current.addEventListener('touchmove', function (event) {
 			event.preventDefault();
 		});
 

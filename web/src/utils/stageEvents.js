@@ -1,19 +1,13 @@
-import { CharacterPosition } from '../utils/characterPosition';
+import { CharacterPosition } from './characterPosition';
 
-type EventsProps = {
-	posX: number;
-	posY: number;
-	eventName: string;
-};
-
-export let StageEvents: EventsProps[] = [];
+export let StageEvents = [];
 
 export const GetStageEvents = () => {
 	StageEvents = [];
 	const stageEvents = document.getElementsByClassName('item');
 
 	for (var i = 0; i < stageEvents.length; i++) {
-		const element = stageEvents[i] as HTMLElement;
+		const element = stageEvents[i];
 
 		const offsetLeft = element.offsetLeft;
 		const offsetTop = element.offsetTop;
@@ -29,7 +23,7 @@ export const GetStageEvents = () => {
 	}
 };
 
-export const CheckStageEvent = (x: number, y: number) => {
+export const CheckStageEvent = (x, y) => {
 	const eventExists = StageEvents.find(
 		(item) =>
 			item.posX === CharacterPosition.posX + x &&
@@ -39,7 +33,7 @@ export const CheckStageEvent = (x: number, y: number) => {
 	return eventExists?.eventName;
 };
 
-export const RemoveEvent = (eventID: string) => {
+export const RemoveEvent = (eventID) => {
 	const eventDiv = document.getElementById(eventID);
 	eventDiv?.remove();
 };

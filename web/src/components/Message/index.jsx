@@ -19,10 +19,6 @@ export const Message = ({
 	messages,
 	onClose,
 	mainScreenWidth,
-}: {
-	messages: string[];
-	onClose: () => void;
-	mainScreenWidth: number | undefined;
 }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [textButton, setTextButton] = useState('avançar');
@@ -34,9 +30,9 @@ export const Message = ({
 
 	const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
-	const movieBarTop = useRef<HTMLInputElement | null>(null);
-	const movieBarBottom = useRef<HTMLInputElement | null>(null);
-	const content = useRef<HTMLInputElement | null>(null);
+	const movieBarTop = useRef(null);
+	const movieBarBottom = useRef(null);
+	const content = useRef(null);
 
 	const startAnimation = () => {
 		HandleMovementStatus(false);
@@ -71,7 +67,7 @@ export const Message = ({
 		}
 	}, [currentIndex, messages, finishAnimation]);
 
-	const handleKeyPress = (event: KeyboardEvent) => {
+	const handleKeyPress = (event) => {
 		if (!isButtonEnabled) return;
 
 		const key = event.key;
