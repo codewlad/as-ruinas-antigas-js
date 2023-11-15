@@ -35,11 +35,13 @@ export const Hud = ({
 	mainScreenWidth,
 	goals,
 	updateGoals,
+	setStep,
 }: {
 	updateTorchPosition: UpdateTorchPosition;
 	mainScreenWidth: number | undefined;
 	goals: Goal[];
 	updateGoals: any;
+	setStep: any;
 }) => {
 	const preventSpacebarActivation = (
 		e: React.KeyboardEvent<HTMLButtonElement>
@@ -91,6 +93,7 @@ export const Hud = ({
 
 		if (returnItemClick && returnItemClick !== true) {
 			if ('event' in returnItemClick) {
+				setStep('');
 				updateGoals(returnItemClick.event);
 				RemoveEvent(returnItemClick.event!);
 				GetBloquedTiles();

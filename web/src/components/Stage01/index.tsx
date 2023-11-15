@@ -29,6 +29,7 @@ export const Stage01 = ({
 
 	const [step, setStep] = useState<string>('initial stage');
 	const [dialog01, setDialog01] = useState(false);
+	const [messageGetTorch, setMessageGetTorch] = useState(false);
 
 	type Goal = {
 		id: string;
@@ -74,6 +75,8 @@ export const Stage01 = ({
 	};
 
 	const getTorch = () => {
+		setMessageGetTorch(true);
+		setStep('');
 		updateGoals('event0001-torch');
 		RemoveEvent('event0001-torch');
 		GetBloquedTiles();
@@ -116,7 +119,7 @@ export const Stage01 = ({
 			case 'dialog01':
 				setDialog01(true);
 				break;
-			case 'stage':
+			case 'firstObjectives':
 				setGoals([
 					{
 						id: 'event0002-flint',
@@ -134,11 +137,14 @@ export const Stage01 = ({
 						status: 'active',
 					},
 				]);
-				HandleMovementStatus(true);
+				setStep('stage');
+				break;
+			case 'stage':
 				break;
 			default:
 				break;
 		}
+		HandleMovementStatus(true);
 	}, [step]);
 
 	useEffect(() => {
@@ -387,6 +393,7 @@ export const Stage01 = ({
 				mainScreenWidth={mainScreenWidth}
 				goals={goals}
 				updateGoals={updateGoals}
+				setStep={setStep}
 			/>
 
 			{dialog01 && (
@@ -397,7 +404,7 @@ export const Stage01 = ({
 						'Acho que machuquei minha perna. Ainda bem que guardei essas bandagens num bolso separado, porque tudo o que eu tinha ficou na mochila e não faço a menor idéia de onde ela foi parar.',
 						'Está bem escuro e não consigo subir por onde caí. Espero que eu encontre o caminho para fora daqui o quanto antes...',
 					]}
-					onClose={() => closeMessage(setDialog01, 'stage')}
+					onClose={() => closeMessage(setDialog01, 'firstObjectives')}
 					mainScreenWidth={mainScreenWidth}
 				/>
 			)}
@@ -412,6 +419,16 @@ export const Stage01 = ({
 					backgroundPosition: `${torch.frame}`,
 				}}
 			></Item>
+
+			{messageGetTorch && (
+				<Message
+					messages={['Pegou a tocha!']}
+					onClose={() =>
+						closeMessage(setMessageGetTorch, 'event0001-torch')
+					}
+					mainScreenWidth={mainScreenWidth}
+				/>
+			)}
 		</Conteiner>
 	);
 };
