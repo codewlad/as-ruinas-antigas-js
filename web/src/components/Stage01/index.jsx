@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 
+import { useItems } from '../../providers/items';
+
 import { GetBloquedTiles } from '../../utils/bloquedTiles';
 import { HandleMovementStatus } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
 import { GetStageEvents, RemoveEvent } from '../../utils/stageEvents';
 
-import { Items } from '../../utils/items';
+//import { Items } from '../../utils/items';
 
 import { Char } from '../Char';
 import { Hud } from '../Hud';
@@ -13,11 +15,9 @@ import { Message } from '../Message';
 
 import { Conteiner, Row, TileD, TileW, TileF, Torch, Item } from './styles';
 
-export const Stage01 = ({
-	content,
-	mainScreenWidth,
-}) => {
-	const torch = Items[2];
+export const Stage01 = ({ content, mainScreenWidth }) => {
+	const { torch, setTorch } = useItems();
+	console.log(torch);
 
 	const [posX, setPosX] = useState(48 + 24);
 	const [posY, setPosY] = useState(288 + 24);
@@ -57,13 +57,14 @@ export const Stage01 = ({
 		}, 1500);
 	};
 
-	const closeMessage = (setStateFunction,step) => {
+	const closeMessage = (setStateFunction, step) => {
 		setStateFunction(false);
 		setStep(step);
 	};
 
 	const getTorch = () => {
-		setMessageGetTorch(true);
+		torch.messageItem = true;
+		console.log(torch.messageItem);
 		setStep('');
 		updateGoals('event0001-torch');
 		RemoveEvent('event0001-torch');
@@ -408,11 +409,11 @@ export const Stage01 = ({
 				}}
 			></Item>
 
-			{messageGetTorch && (
+			{torch.messageItem && (
 				<Message
 					messages={['Pegou a tocha!']}
 					onClose={() =>
-						closeMessage(setMessageGetTorch, 'event0001-torch')
+						closeMessage(setStateFunction, torch, 'event0001-torch')
 					}
 					mainScreenWidth={mainScreenWidth}
 				/>
