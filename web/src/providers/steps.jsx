@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export const StepsContext = React.createContext({});
 
 export const StepsProvider = (props) => {
-	const [step, setStep] = useState(null);
+	const [step, setStep] = useState('start-game');
 
 	return (
 		<StepsContext.Provider value={{ step, setStep }}>

@@ -15,8 +15,8 @@ export const Home = () => {
 	const handleKeyPress = (event) => {
 		const key = event.key;
 		const keyPressReturn = HandleKeyPress(step, key);
-		const { id, changeStep } = keyPressReturn;
-		handleEvent(id, changeStep);
+		const { id, isActive, message, changeStep } = keyPressReturn;
+		handleEvent(id, isActive, message, changeStep);
 	};
 
 	useEffect(() => {
@@ -35,18 +35,24 @@ export const Home = () => {
 		<Container>
 			<h1>As Ruínas Antigas</h1>
 
-			<Content>
-				<button
-					id='buttonStartGame'
-					onClick={() => handleEvent('start-game', true)}
-				>
-					<Start>
-						Iniciar
-						<KeyboardLetter>A</KeyboardLetter>
-					</Start>
-					<Totem />
-				</button>
-			</Content>
+			{step === 'start-game' && (
+				<Content>
+					<button
+						id='buttonStartGame'
+						onClick={() =>
+							handleEvent('start-game', false, false, true)
+						}
+					>
+						<Start>
+							Iniciar
+							<KeyboardLetter>A</KeyboardLetter>
+						</Start>
+						<Totem />
+					</button>
+				</Content>
+			)}
+
+			{step === 'game-intro' && <div>intro</div>}
 		</Container>
 	);
 };

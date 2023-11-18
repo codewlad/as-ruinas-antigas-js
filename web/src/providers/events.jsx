@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useSteps } from './steps';
 
@@ -10,7 +10,7 @@ export const EventsProvider = (props) => {
 	const events = [
 		{
 			id: 'start-game',
-			isActive: false,
+			isActive: true,
 			message: false,
 		},
 		{
@@ -20,15 +20,32 @@ export const EventsProvider = (props) => {
 		},
 	];
 
-	const handleEvent = (id, changeStep) => {
+	const checkStep = (id) => {
+		switch (id) {
+			case 'start-game':
+				setStep('game-intro');
+				break;
+			default:
+				break;
+		}
+	};
+
+	const handleEvent = (id, isActive, message, changeStep) => {
 		events.map((event) => {
-			if (event.id === id) {
-				event.isActive = true;
-				console.log(event.isActive);
-				if (changeStep) setStep(id);
+			if (id === 'start-game') {
+				event.isActive = false;
+				checkStep(id);
+			} else if (event.id === id) {
+				event.isActive = isActive;
+				event.message = message;
+				if (changeStep) checkStep(id);
 			}
 		});
 	};
+
+	useEffect(() => {
+		console.log(step);
+	}, [step]);
 
 	return (
 		<EventsContext.Provider value={{ events, handleEvent }}>
