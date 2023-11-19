@@ -12,7 +12,7 @@ import { Stage01 } from '../../components/Stage01';
 import { Container, Content, Start, KeyboardLetter } from './styles';
 
 export const Home = () => {
-	const { step } = useSteps();
+	const { step, gameStep } = useSteps();
 	const { handleEvent, events } = useEvents();
 	const { setMainScreenWidth, setMainScreenContent, charX } = usePositions();
 
@@ -31,8 +31,10 @@ export const Home = () => {
 	};
 
 	const handleKeyPress = (event) => {
+		if (events[0].keepEvent) return;
+
 		const key = event.key;
-		const keyPressReturn = HandleKeyPress(step, key);
+		const keyPressReturn = HandleKeyPress(step.name, key);
 		const { id, keepEvent, changeStep } = keyPressReturn;
 		handleEvent(id, keepEvent, changeStep);
 	};
@@ -53,17 +55,17 @@ export const Home = () => {
 
 	useEffect(() => {
 		console.log('Step -> ', step);
-		if (step !== 'start-game') {
+		if (step.name !== 'start-game') {
 			content.current.style.alignItems = 'flex-start';
 		}
-	}, [step]);
+	}, [gameStep]);
 
 	return (
 		<Container>
 			<h1>As Ruínas Antigas</h1>
 
 			<Content ref={content}>
-				{step === 'start-game' && (
+				{step.name === 'start-game' && (
 					<>
 						<button
 							id='buttonStartGame'
@@ -80,7 +82,7 @@ export const Home = () => {
 					</>
 				)}
 
-				{step === 'game-intro' && (
+				{step.name === 'game-intro' && (
 					<Message
 						messages={[
 							'Durante uma de suas viagens de trabalho, o experiente arqueólogo Raul Gonçalves, encontra vestígios de uma civilização antiga, bem no coração da Floresta Amazônica, no Brasil.',
@@ -92,7 +94,7 @@ export const Home = () => {
 					/>
 				)}
 
-				{(step === 'stage01-intro' || events[2].keepEvent) && (
+				{(step.name === 'stage01-intro' || events[3].keepEvent) && (
 					<Stage01 />
 				)}
 			</Content>

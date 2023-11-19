@@ -6,6 +6,10 @@ export const EventsContext = React.createContext({});
 
 const events = [
 	{
+		eventName: 'message',
+		keepEvent: false,
+	},
+	{
 		eventName: 'start-game',
 		keepEvent: false,
 	},
@@ -24,18 +28,21 @@ const events = [
 ];
 
 export const EventsProvider = (props) => {
-	const { step, setStep } = useSteps();
+	const { step, setGameStep } = useSteps();
 
 	const checkStep = (id) => {
 		switch (id) {
 			case 'game-intro':
-				setStep('stage01-intro');
+				step.name = 'stage01-intro';
+				setGameStep('stage01-intro');
 				break;
 			case 'stage01-intro':
-				setStep('stage01-dialog01');
+				step.name = 'stage01-dialog01';
+				setGameStep('stage01-dialog01');
 				break;
 			case 'stage01-dialog01':
-				setStep('');
+				step.name = 'go';
+				setGameStep('go');
 				console.log('chegou aqui');
 				break;
 			default:
@@ -48,7 +55,8 @@ export const EventsProvider = (props) => {
 			if (event.eventName === id) {
 				event.keepEvent = keepEvent;
 				if (id === 'start-game') {
-					setStep('game-intro');
+					step.name = 'game-intro';
+					setGameStep('game-intro');
 				} else {
 					if (changeStep) checkStep(id);
 				}

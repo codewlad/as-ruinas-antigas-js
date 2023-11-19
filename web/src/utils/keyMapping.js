@@ -1,6 +1,13 @@
 export const HandleKeyPress = (step, key) => {
 	let id, keepEvent, changeStep;
 
+	const nullReturn = () => {
+		id = '';
+		keepEvent = false;
+		changeStep = false;
+		return { id, keepEvent, changeStep };
+	};
+
 	switch (key) {
 		case 'a':
 			if (step === 'start-game') {
@@ -8,10 +15,11 @@ export const HandleKeyPress = (step, key) => {
 				keepEvent = false;
 				changeStep = true;
 				return { id, keepEvent, changeStep };
+			} else {
+				return nullReturn();
 			}
-			break;
 		default:
-			return { id, changeStep };
+			return nullReturn();
 	}
 	/*
 	let id, isActive, message;

@@ -13,12 +13,14 @@ import {
 } from './styles';
 
 import { usePositions } from '../../providers/positions';
+import { useEvents } from '../../providers/events';
 
 import { HandleMovementStatus } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
 
 export const Message = ({ messages, onClose }) => {
 	const { mainScreenWidth } = usePositions();
+	const { events } = useEvents();
 
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [textButton, setTextButton] = useState('avançar');
@@ -35,6 +37,7 @@ export const Message = ({ messages, onClose }) => {
 	const content = useRef(null);
 
 	const startAnimation = () => {
+		events[0].keepEvent = true;
 		HandleMovementStatus(false);
 		if (movieBarTop.current && movieBarBottom.current && content.current) {
 			movieBarTop.current.classList.add('movie-bar');
@@ -50,6 +53,7 @@ export const Message = ({ messages, onClose }) => {
 			content.current.classList.remove('bc-opacity-black-80', 'show');
 		}
 		const awaitBeforeClose = setInterval(() => {
+			events[0].keepEvent = false;
 			onClose();
 			clearInterval(awaitBeforeClose);
 		}, 1000);
@@ -71,10 +75,8 @@ export const Message = ({ messages, onClose }) => {
 		if (!isButtonEnabled) return;
 
 		const key = event.key;
-		const id = 'message';
-		const keyPressReturn = HandleKeyPress({ key, id });
 
-		if (keyPressReturn) {
+		if (key === 'a') {
 			handleMessage();
 		}
 	};

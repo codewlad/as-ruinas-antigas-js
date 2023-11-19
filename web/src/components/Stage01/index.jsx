@@ -254,7 +254,7 @@ export const Stage01 = () => {
 
 			<Hud />
 
-			{step === 'stage01-dialog01' && (
+			{step.name === 'stage01-dialog01' && (
 				<Message
 					messages={[
 						'Ai... ai...',
