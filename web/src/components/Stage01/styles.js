@@ -8,15 +8,13 @@ export const Conteiner = styled.div`
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	filter: brightness(0);
-
-	/* Animations */
+	filter: brightness(0%);
+	animation: fade-in 1s ease-in forwards, moveRightLeft 0.5s ease-in-out 2;
 
 	@keyframes fade-in {
 		0% {
-			filter: brightness(0);
+			filter: brightness(0%);
 		}
-
 		100% {
 			filter: brightness(100%);
 		}

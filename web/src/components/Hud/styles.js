@@ -10,6 +10,7 @@ export const Conteiner = styled.div`
 	z-index: 12;
 	display: flex;
 	align-items: flex-end;
+	opacity: 0.7;
 `;
 
 export const Sticky = styled.div`
@@ -18,7 +19,7 @@ export const Sticky = styled.div`
 	left: 0;
 	height: 100%;
 
-	//background-Color: #00009955;
+	//background-color: #00009955;
 	//border: 1px solid white;
 `;
 
@@ -27,8 +28,6 @@ export const Pad = styled.div`
 	z-index: 12;
 	bottom: 0;
 	left: 0;
-
-	opacity: 0.5;
 
 	display: grid;
 	grid-template-areas:

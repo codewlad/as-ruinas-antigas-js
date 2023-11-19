@@ -1,35 +1,152 @@
-import { useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-import { Conteiner, Row, TileD, TileW, TileF } from './styles';
+import { useItems } from '../../providers/items';
 
-import { useSteps } from '../../providers/steps';
-import { useEvents } from '../../providers/events';
-import { usePositions } from '../../providers/positions';
+import { GetBloquedTiles } from '../../utils/bloquedTiles';
+import { HandleMovementStatus } from '../../utils/characterMovement';
+import { HandleKeyPress } from '../../utils/keyMapping';
+import { GetStageEvents, RemoveEvent } from '../../utils/stageEvents';
+
+//import { Items } from '../../utils/items';
 
 import { Char } from '../Char';
 import { Hud } from '../Hud';
 import { Message } from '../Message';
 
-export const Stage01 = () => {
-	const { step, setStep } = useSteps();
-	const { handleEvent } = useEvents();
-	const { setCharX, setCharY } = usePositions();
+import { Conteiner, Row, TileD, TileW, TileF, Torch, Item } from './styles';
 
-	const scene01Intro = () => {
+export const Stage01 = ({ content, mainScreenWidth }) => {
+	const { torch, setTorch } = useItems();
+	console.log(torch);
+
+	const [posX, setPosX] = useState(48 + 24);
+	const [posY, setPosY] = useState(288 + 24);
+
+	const [introStage01, setIntroStage01] = useState(true);
+
+	const [step, setStep] = useState('initial stage');
+	const [dialog01, setDialog01] = useState(false);
+	const [messageGetTorch, setMessageGetTorch] = useState(false);
+
+	const [goals, setGoals] = useState([]);
+
+	const conteinerRef = useRef(null);
+
+	const updateGoals = (id) => {
+		const updatedGoals = goals.map((goal) => {
+			if (goal.id === id) {
+				return { ...goal, status: 'complete' };
+			}
+			return goal;
+		});
+		setGoals(updatedGoals);
+	};
+
+	const updateTorchPosition = (newPosX, newPosY) => {
+		setPosX(newPosX + 24);
+		setPosY(newPosY + 24);
+	};
+
+	const scene01 = () => {
+		conteinerRef.current.style.animation =
+			'fade-in 1s forwards, moveRightLeft 0.5s ease-in-out 2';
+
 		setTimeout(() => {
-			handleEvent('stage01-intro', true, true);
+			setIntroStage01(false);
+			setStep('dialog01');
 		}, 1500);
 	};
 
-	useEffect(() => {
-		setCharX(48);
-		setCharY(288);
+	const closeMessage = (setStateFunction, step) => {
+		setStateFunction(false);
+		setStep(step);
+	};
 
-		scene01Intro();
+	const getTorch = () => {
+		torch.messageItem = true;
+		console.log(torch.messageItem);
+		setStep('');
+		updateGoals('event0001-torch');
+		RemoveEvent('event0001-torch');
+		GetBloquedTiles();
+		GetStageEvents();
+	};
+
+	const handleKeyPress = (event) => {
+		const key = event.key;
+		const id = 'stage';
+		const keyPressReturn = HandleKeyPress({ key, id });
+
+		if (keyPressReturn && keyPressReturn !== true && step === 'stage') {
+			if ('event' in keyPressReturn) {
+				switch (keyPressReturn.event) {
+					case 'event0001-torch':
+						getTorch();
+						break;
+					default:
+						console.log('stage');
+						break;
+				}
+			}
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyPress);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyPress);
+		};
+	}, [handleKeyPress]);
+
+	useEffect(() => {
+		HandleMovementStatus(false);
+
+		switch (step) {
+			case 'initial stage':
+				break;
+			case 'dialog01':
+				setDialog01(true);
+				break;
+			case 'firstObjectives':
+				setGoals([
+					{
+						id: 'event0002-flint',
+						message: 'Encontre uma pederneira',
+						status: 'active',
+					},
+					{
+						id: 'event0001-torch',
+						message: 'Encontre uma tocha',
+						status: 'active',
+					},
+					{
+						id: 'event0003-acenda',
+						message: 'Acenda a tocha e encontre a saída',
+						status: 'active',
+					},
+				]);
+				setStep('stage');
+				break;
+			case 'stage':
+				break;
+			default:
+				break;
+		}
+		HandleMovementStatus(true);
+	}, [step]);
+
+	useEffect(() => {
+		GetBloquedTiles();
+		GetStageEvents();
+
+		if (introStage01) {
+			scene01();
+		}
 	}, []);
 
 	return (
-		<Conteiner>
+		<Conteiner ref={conteinerRef}>
 			{/* line 1*/}
 			<Row>
 				<TileD className='td' />
@@ -250,11 +367,25 @@ export const Stage01 = () => {
 				<TileW className='tw' />
 			</Row>
 
-			<Char />
+			<Char
+				updateTorchPosition={updateTorchPosition}
+				content={content}
+			/>
+			<Torch
+				style={{
+					background: `radial-gradient(circle at ${posX}px ${posY}px, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 200px)`,
+				}}
+			/>
 
-			<Hud />
+			<Hud
+				updateTorchPosition={updateTorchPosition}
+				mainScreenWidth={mainScreenWidth}
+				goals={goals}
+				updateGoals={updateGoals}
+				setStep={setStep}
+			/>
 
-			{step === 'stage01-dialog01' && (
+			{dialog01 && (
 				<Message
 					messages={[
 						'Ai... ai...',
@@ -262,7 +393,29 @@ export const Stage01 = () => {
 						'Acho que machuquei minha perna. Ainda bem que guardei essas bandagens num bolso separado, porque tudo o que eu tinha ficou na mochila e não faço a menor idéia de onde ela foi parar.',
 						'Está bem escuro e não consigo subir por onde caí. Espero que eu encontre o caminho para fora daqui o quanto antes...',
 					]}
-					onClose={() => handleEvent('stage01-dialog01', false, true)}
+					onClose={() => closeMessage(setDialog01, 'firstObjectives')}
+					mainScreenWidth={mainScreenWidth}
+				/>
+			)}
+
+			<Item
+				className='item'
+				id='event0001-torch'
+				style={{
+					top: '432px',
+					left: '432px',
+					background: `url(${torch.image})`,
+					backgroundPosition: `${torch.frame}`,
+				}}
+			></Item>
+
+			{torch.messageItem && (
+				<Message
+					messages={['Pegou a tocha!']}
+					onClose={() =>
+						closeMessage(setStateFunction, torch, 'event0001-torch')
+					}
+					mainScreenWidth={mainScreenWidth}
 				/>
 			)}
 		</Conteiner>

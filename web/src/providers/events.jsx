@@ -1,54 +1,63 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useSteps } from './steps';
 
 export const EventsContext = React.createContext({});
 
+const events = [
+	{
+		eventName: 'start-game',
+		keepEvent: false,
+	},
+	{
+		eventName: 'game-intro',
+		keepEvent: false,
+	},
+	{
+		eventName: 'stage01-intro',
+		keepEvent: false,
+	},
+	{
+		eventName: 'stage01-dialog01',
+		keepEvent: false,
+	},
+];
+
 export const EventsProvider = (props) => {
 	const { step, setStep } = useSteps();
 
-	const events = [
-		{
-			id: 'start-game',
-			isActive: true,
-			message: false,
-		},
-		{
-			id: 'game-intro',
-			isActive: false,
-			message: false,
-		},
-	];
-
 	const checkStep = (id) => {
 		switch (id) {
-			case 'start-game':
-				setStep('game-intro');
+			case 'game-intro':
+				setStep('stage01-intro');
+				break;
+			case 'stage01-intro':
+				setStep('stage01-dialog01');
+				break;
+			case 'stage01-dialog01':
+				setStep('');
+				console.log('chegou aqui');
 				break;
 			default:
 				break;
 		}
 	};
 
-	const handleEvent = (id, isActive, message, changeStep) => {
+	const handleEvent = (id, keepEvent, changeStep) => {
 		events.map((event) => {
-			if (id === 'start-game') {
-				event.isActive = false;
-				checkStep(id);
-			} else if (event.id === id) {
-				event.isActive = isActive;
-				event.message = message;
-				if (changeStep) checkStep(id);
+			if (event.eventName === id) {
+				event.keepEvent = keepEvent;
+				if (id === 'start-game') {
+					setStep('game-intro');
+				} else {
+					if (changeStep) checkStep(id);
+				}
 			}
 		});
 	};
 
-	useEffect(() => {
-		console.log(step);
-	}, [step]);
-
 	return (
-		<EventsContext.Provider value={{ events, handleEvent }}>
+		<EventsContext.Provider value={{ handleEvent, events }}>
 			{props.children}
 		</EventsContext.Provider>
 	);

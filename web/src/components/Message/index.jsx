@@ -12,14 +12,14 @@ import {
 	KeyboardLetter,
 } from './styles';
 
+import { usePositions } from '../../providers/positions';
+
 import { HandleMovementStatus } from '../../utils/characterMovement';
 import { HandleKeyPress } from '../../utils/keyMapping';
 
-export const Message = ({
-	messages,
-	onClose,
-	mainScreenWidth,
-}) => {
+export const Message = ({ messages, onClose }) => {
+	const { mainScreenWidth } = usePositions();
+
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [textButton, setTextButton] = useState('avançar');
 	const [isFinished, setIsFinished] = useState(false);
@@ -125,12 +125,8 @@ export const Message = ({
 
 	return (
 		<Conteiner>
-			<Sticky>
-				<MessageConteiner
-					style={{
-						width: `${mainScreenWidth}px`,
-					}}
-				>
+			<Sticky style={{ width: `${mainScreenWidth}px` }}>
+				<MessageConteiner>
 					<MovieBarTop ref={movieBarTop} />
 					<Content ref={content}>
 						<WrappedMessages>

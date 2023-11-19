@@ -1,18 +1,17 @@
 export const HandleKeyPress = (step, key) => {
-	let id, isActive, message, changeStep;
+	let id, keepEvent, changeStep;
 
 	switch (key) {
 		case 'a':
 			if (step === 'start-game') {
 				id = step;
-				isActive = false;
-				message = false;
+				keepEvent = false;
 				changeStep = true;
-				return { id, isActive, message, changeStep };
+				return { id, keepEvent, changeStep };
 			}
 			break;
 		default:
-			break;
+			return { id, changeStep };
 	}
 	/*
 	let id, isActive, message;
