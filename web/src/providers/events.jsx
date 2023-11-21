@@ -25,6 +25,22 @@ const events = [
 		eventName: 'stage01-dialog01',
 		keepEvent: false,
 	},
+	{
+		eventName: 'ArrowRight',
+		keepEvent: false,
+	},
+	{
+		eventName: 'ArrowLeft',
+		keepEvent: false,
+	},
+	{
+		eventName: 'ArrowDown',
+		keepEvent: false,
+	},
+	{
+		eventName: 'ArrowUp',
+		keepEvent: false,
+	},
 ];
 
 export const EventsProvider = (props) => {
@@ -36,15 +52,34 @@ export const EventsProvider = (props) => {
 				step.name = 'stage01-intro';
 				setGameStep('stage01-intro');
 				break;
+
 			case 'stage01-intro':
 				step.name = 'stage01-dialog01';
 				setGameStep('stage01-dialog01');
 				break;
+
 			case 'stage01-dialog01':
 				step.name = 'go';
 				setGameStep('go');
 				console.log('chegou aqui');
 				break;
+
+			case 'ArrowRight':
+				console.log(id);
+				break;
+
+			case 'ArrowLeft':
+				console.log(id);
+				break;
+
+			case 'ArrowDown':
+				console.log(id);
+				break;
+
+			case 'ArrowUp':
+				console.log(id);
+				break;
+
 			default:
 				break;
 		}

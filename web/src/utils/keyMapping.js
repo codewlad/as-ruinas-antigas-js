@@ -8,6 +8,13 @@ export const HandleKeyPress = (step, key) => {
 		return { id, keepEvent, changeStep };
 	};
 
+	const directionReturn = () => {
+		id = key;
+		keepEvent = false;
+		changeStep = true;
+		return { id, keepEvent, changeStep };
+	};
+
 	switch (key) {
 		case 'a':
 			if (step === 'start-game') {
@@ -18,6 +25,19 @@ export const HandleKeyPress = (step, key) => {
 			} else {
 				return nullReturn();
 			}
+
+		case 'ArrowRight':
+			return directionReturn();
+
+		case 'ArrowLeft':
+			return directionReturn();
+
+		case 'ArrowDown':
+			return directionReturn();
+
+		case 'ArrowUp':
+			return directionReturn();
+
 		default:
 			return nullReturn();
 	}

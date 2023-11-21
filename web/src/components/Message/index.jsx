@@ -54,6 +54,7 @@ export const Message = ({ messages, onClose }) => {
 		}
 		const awaitBeforeClose = setInterval(() => {
 			events[0].keepEvent = false;
+			HandleMovementStatus(true);
 			onClose();
 			clearInterval(awaitBeforeClose);
 		}, 1000);
